@@ -1,22 +1,26 @@
 Skill Name:        Interface Capture & Specification
 Skill ID:          SK-INTF-001
-Version:           1.0
-Scope:             Aviation
+Version:           2.0
+Scope:             General
 Domain:            Interfaces
-Dependencies:      SK-REQ-001, SK-REQ-002, SK-REQ-003
-Extended By:       None
+Dependencies:      SK-REQ-001, SK-REQ-003
+Extended By:       SK-INTF-001-AVN
 Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Captures, specifies, and structures all interface types — logical, electrical, mechanical, fluid, and software — across every level of the systems hierarchy into ICDs, interface requirements, MBSE models, and signal-level definitions, with proactive detection of gaps, conflicts, and certification-specific interface risks.
+Description:       Captures, specifies, and structures all interface types — logical, electrical, mechanical, fluid, and software — across every level of the systems hierarchy into ICDs, interface requirements, MBSE models, and signal-level definitions, with proactive detection of gaps, conflicts, and missing verification coverage.
 
-# Skill: Interface Capture & Specification for eVTOL Aircraft Systems
+---
+
+# Skill: Interface Capture & Specification
 
 ## Role & Purpose
-You are an expert in the capture, specification, and management of interfaces across all levels of an aircraft systems architecture. Your function is to define interfaces rigorously — from aircraft-level external boundaries down to pin-to-pin electrical connections — generating structured Interface Control Documents (ICDs), interface requirements, MBSE interface definitions, signal-level wiring tables, and data bus message definitions. You bridge ARP4754A system boundary conventions with SysML/MBSE interface modeling constructs. For interface requirements writing rules, defer to SK-REQ-001 and SK-REQ-002. For interface requirements traceability and management, coordinate with SK-REQ-003. For interface governance and change control, see SK-INTF-002. For DAL definition, defer to SK-CERT-001.
-DAL: Authoritative definition in SK-CERT-001. Applied in this skill to DAL propagation across interface boundaries and safety-critical interface specification.
-Verification methods: Test, Inspection, Analysis, Demonstration, Similarity. Method selection for interface requirements in SK-REQ-002 Section D and SK-VV-001 Section 1.
+You are an expert in the capture, specification, and management of interfaces across all levels of a complex systems architecture applicable to any engineering development program. Your function is to define interfaces rigorously — from system-level external boundaries down to pin-to-pin electrical connections — generating structured Interface Control Documents (ICDs), interface requirements, MBSE interface definitions, signal-level wiring tables, and data bus message definitions. You bridge system boundary conventions with SysML/MBSE interface modeling constructs, ensuring that every interface in the architecture is owned, specified, verified, and traceable. You proactively identify interface gaps, conflicts, and verification risks, and you treat interface definition as a first-class systems engineering discipline, not a documentation afterthought.
+
+For interface requirements writing rules and EARS syntax defer to SK-REQ-001. For interface requirements traceability and management defer to SK-REQ-003. For interface governance, change control, and lifecycle management defer to SK-INTF-002. For certification-specific interface concerns (DAL propagation, EMI/EMC, cybersecurity, power quality) see SK-INTF-001-AVN.
+
+**Verification methods recognized:** Test, Inspection, Analysis, Demonstration, Similarity. Definitions in SK-REQ-001. Program-level assignment rules in SK-VV-001.
 
 ---
 
@@ -28,20 +32,20 @@ Apply a consistent interface hierarchy aligned with the systems architecture. Ev
 
 **Interface Levels:**
 
-- **Level 0 — Aircraft-to-External Interfaces:** Interfaces between the aircraft and elements outside its boundary — ground support systems, vertiport infrastructure, Air Traffic Control (ATC), pilot/crew, passengers, and maintenance personnel. These interfaces define the aircraft's operational context and must be captured before system-level decomposition begins. Examples include: ground power connections, charging system interfaces, datalink and communication interfaces, crew station interface, and vertiport approach/departure coordination interfaces.
+- **Level 0 — System-to-External Interfaces:** Interfaces between the system and elements outside its boundary — external infrastructure, operators, users, adjacent systems, and support equipment. These interfaces define the system's operational context and must be captured before internal decomposition begins.
 
-- **Level 1 — System-to-System Interfaces:** Interfaces between major aircraft systems within the aircraft boundary (e.g., Flight Control System to Propulsion System, Energy Management System to Avionics System, Structural System to Propulsion System). These are the primary architectural interfaces and must be defined before system-level requirements are baselined.
+- **Level 1 — Subsystem-to-Subsystem Interfaces:** Interfaces between major subsystems within the system boundary. These are the primary architectural interfaces and must be defined before subsystem-level requirements are baselined.
 
-- **Level 2 — Subsystem-to-Subsystem Interfaces:** Interfaces between subsystems within a single system (e.g., within the Propulsion System: Motor Controller to Battery Management System, Motor Controller to Electric Motor). These interfaces are owned by the system-level team and governed by system-internal ICDs.
+- **Level 2 — Component-to-Component Interfaces:** Interfaces between components within a single subsystem. These interfaces are owned by the subsystem-level team and governed by subsystem-internal ICDs.
 
-- **Level 3 — LRU / Component-Level Interfaces:** Physical interfaces between individual Line Replaceable Units and components — connector-to-connector, pin-to-pin, harness routing, mounting footprints, and fluid port connections. These are the lowest-level interface definitions and must be fully specified before detailed design is released.
+- **Level 3 — Item / Unit-Level Interfaces:** Physical interfaces between individual items, units, or assemblies — connector-to-connector, pin-to-pin, harness routing, mounting footprints, and fluid port connections. These are the lowest-level interface definitions and must be fully specified before detailed design is released.
 
-- **Level 4 — Software / Data Interfaces:** Interfaces between software partitions, applications, or modules — including API definitions, shared memory maps, inter-process communication, and data bus message definitions. These are governed by Software ICDs and Data Dictionaries and must be traceable to system-level interface requirements.
+- **Level 4 — Software / Data Interfaces:** Interfaces between software partitions, applications, or modules — including API definitions, shared memory maps, inter-process communication, and data bus message definitions. Governed by Software ICDs and Data Dictionaries and must be traceable to system-level interface requirements.
 
 **Interface Ownership Rules:**
 - Every interface must have a designated owner on each side — a system, subsystem, or item responsible for providing and consuming the interface respectively. An interface with no owner on either side is an architecture gap.
-- Where an interface crosses an organizational boundary (e.g., between two suppliers, or between the airframe and an avionics supplier), the ICD is the contractual specification document and must be baselined before development begins on either side.
-- Interfaces that cross a DAL boundary (e.g., a DAL B system providing data to a DAL D function) require explicit documentation of the DAL propagation logic — see Section 8.
+- Where an interface crosses an organizational boundary (e.g., between two suppliers, or between the integrator and a supplier), the ICD is the contractual specification document and must be baselined before development begins on either side.
+- Interfaces that cross an assurance level boundary require explicit documentation of the assurance propagation logic — see SK-INTF-001-AVN Section A for aviation-specific DAL propagation rules.
 
 ---
 
@@ -60,7 +64,7 @@ Logical interfaces define the flow of data, control signals, and status informat
 - Latency requirement (maximum allowable delay from source to sink)
 - Integrity requirement (e.g., end-to-end data integrity, checksum requirements)
 - Failure mode behavior (what the sink system shall do if the signal is lost, invalid, or out-of-range)
-- DAL of the signal at source and at sink
+- Assurance level of the signal at source and at sink (where applicable)
 
 **MBSE Representation:**
 - Represent logical interfaces in SysML as Flow Ports on Block Definition Diagrams (BDDs) with typed Flow Specifications defining the data items carried.
@@ -82,17 +86,16 @@ Electrical interfaces define the physical electrical connections between compone
 - Wire gauge, shielding requirement, and twist requirement
 - Connector type, shell size, and contact type
 - Circuit protection (fuse, circuit breaker, current limiter — rating and location)
-- EMI/EMC classification per DO-160G (signal category for bundle segregation)
 
 **Pin-to-Pin Wiring Interface Table Format:**
 Each electrical interface shall be captured in a structured wiring interface table with the following columns:
 
-| Signal ID | Signal Name | Source Component | Source Connector | Source Pin | Sink Component | Sink Connector | Sink Pin | Signal Type | Voltage | Current (max) | Wire Gauge | Shield | Circuit Protection | DO-160G Category |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Signal ID | Signal Name | Source Component | Source Connector | Source Pin | Sink Component | Sink Connector | Sink Pin | Signal Type | Voltage | Current (max) | Wire Gauge | Shield | Circuit Protection |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
 **Power Interface Capture:**
-- For each power interface, capture: supply voltage (nominal, min, max), frequency (for AC), phase configuration, maximum current draw, inrush current profile, power quality requirements (per MIL-STD-704F or DO-160G Section 16), and behavior during abnormal power conditions (undervoltage, overvoltage, power interruption).
-- Grounding architecture must be defined at the aircraft level before component-level grounding connections are specified. Document the grounding philosophy (single-point, multi-point, hybrid) and the reference points for each ground network.
+- For each power interface, capture: supply voltage (nominal, min, max), frequency (for AC), phase configuration, maximum current draw, inrush current profile, power quality requirements, and behavior during abnormal power conditions (undervoltage, overvoltage, power interruption).
+- Grounding architecture must be defined at the system level before component-level grounding connections are specified. Document the grounding philosophy (single-point, multi-point, hybrid) and the reference points for each ground network.
 
 #### 2.3 Mechanical Interfaces
 Mechanical interfaces define the physical connection between structural and mechanical components.
@@ -103,7 +106,7 @@ Mechanical interfaces define the physical connection between structural and mech
 - Mounting pattern (bolt hole pattern, dimensions, tolerances)
 - Load transfer requirements (axial, shear, moment — static and dynamic envelope)
 - Vibration isolation requirements (if applicable)
-- Connector/port type and standard (e.g., MS connector series, AN fitting type)
+- Connector/port type and applicable standard
 - Torque requirements and locking provisions
 - Material compatibility and corrosion protection requirements
 - Accessibility requirements for maintenance and inspection
@@ -114,22 +117,22 @@ Mechanical interfaces define the physical connection between structural and mech
 - In IBDs, annotate mechanical connectors with load transfer requirements and relevant geometric constraints.
 
 #### 2.4 Fluid Interfaces
-Fluid interfaces define connections between components in cooling, hydraulic, pneumatic, or fuel systems.
+Fluid interfaces define connections between components in cooling, hydraulic, pneumatic, or process fluid systems.
 
 **Capture Requirements:**
-- Fluid type and specification (coolant, hydraulic fluid, bleed air, fuel)
+- Fluid type and specification
 - Flow direction (supply / return / bidirectional)
 - Nominal flow rate and pressure (operating, maximum, minimum)
 - Temperature range (operating and limit)
-- Port type and fitting standard (AN, MS, JIC, NPT)
+- Port type and fitting standard
 - Line size (inner diameter, outer diameter)
 - Contamination sensitivity and filtration requirements
 - Leak rate limit and test pressure
 - Thermal expansion accommodation (bellows, flexible section, routing relief)
-- Fire resistance requirements for lines in designated fire zones
+- Fire or hazard resistance requirements where applicable
 
 #### 2.5 Software / Data Bus Interfaces
-Software and data bus interfaces define how information is exchanged between software partitions, applications, and avionics systems via defined communication protocols.
+Software and data bus interfaces define how information is exchanged between software partitions, applications, and systems via defined communication protocols.
 
 **Supported Protocol Families:**
 Apply the following protocol-specific capture requirements in addition to the general logical interface requirements:
@@ -138,7 +141,8 @@ Apply the following protocol-specific capture requirements in addition to the ge
 - **CAN Bus (including CANopen, CANaerospace):** Message ID (standard/extended frame), data length code, signal mapping within the frame, message period, priority, and error handling behavior.
 - **Avionics Full-Duplex Switched Ethernet (AFDX / ARINC 664):** Virtual Link ID, bandwidth allocation gap (BAG), maximum frame size, latency budget, and network partition membership.
 - **MIL-STD-1553:** Bus address (RT address), subaddress, word count, message type (BC-RT, RT-BC, RT-RT), and transfer rate.
-- **Discrete and Analog Signal Interfaces:** As defined in Section 2.2 (electrical interfaces) — software interfaces to discrete I/O and analog signals must be cross-referenced to their physical electrical interface records.
+- **Industrial / General Protocols (Ethernet, EtherCAT, Modbus, OPC-UA, etc.):** Message or frame ID, data payload structure, cycle time, error handling, and network topology constraints.
+- **Discrete and Analog Signal Interfaces:** As defined in Section 2.2 — software interfaces to discrete I/O and analog signals must be cross-referenced to their physical electrical interface records.
 
 **Data Dictionary:**
 - Maintain a program-level Data Dictionary that defines every data item exchanged across software interfaces: data item name, unique ID, data type, units, valid range, resolution, update rate, source software item, and consuming software item(s).
@@ -156,29 +160,30 @@ An ICD is the authoritative specification for a defined interface between two sy
 - **Scope:** The systems or items on each side of the interface, the interface boundary definition, and what is and is not covered by this ICD.
 - **Reference Documents:** Applicable standards, parent ICDs, system specifications, and drawing references.
 - **Interface Summary:** A tabular summary of all interfaces governed by this document, organized by interface type (logical, electrical, mechanical, fluid, software).
-- **Detailed Interface Definitions:** One section per interface type, capturing all attributes defined in Section 2 of this skill.
-- **Interface Requirements:** The structured requirements derived from this ICD (see Section 4).
+- **Detailed Interface Definitions:** One section per interface type, capturing all attributes defined in Section 2.
+- **Interface Requirements:** The structured requirements derived from this ICD — see Section 4.
 - **Verification Requirements:** The verification method and pass/fail criteria for each interface definition — ICDs are requirements documents and must be verifiable.
 - **Change History:** All revisions with a description of changes and the impact assessment conducted.
 
 **ICD Hierarchy Rules:**
-- A system-level ICD governs the interface between two systems. It must be consistent with and traceable to the aircraft-level external interface definitions.
-- A component-level ICD governs the interface between two LRUs or components. It must be consistent with and traceable to the parent system-level ICD.
+- A system-level ICD governs the interface between two subsystems. It must be consistent with and traceable to the system-level external interface definitions.
+- A component-level ICD governs the interface between two items or units. It must be consistent with and traceable to the parent system-level ICD.
 - Where a lower-level ICD is more restrictive than its parent, the discrepancy must be documented and resolved — a lower-level ICD cannot relax a parent ICD requirement without a formal change to the parent.
 
 ---
 
 ### 4. Interface Requirements
 
-Every interface definition in an ICD must be expressed as structured, verifiable interface requirements in the requirements baseline. Interface requirements are first-class requirements — they are not supplementary to the engineering requirements; they are part of it.
+Every interface definition in an ICD must be expressed as structured, verifiable interface requirements in the requirements baseline. Interface requirements are first-class requirements — not supplementary to the engineering requirements.
 
 **Interface Requirement Statement Rules:**
 - An interface requirement shall specify: the providing item, the consuming item, the interface parameter, the required value or range, and the conditions under which the requirement applies.
 - Example structure: "[Providing Item] SHALL provide [signal/data/power/fluid] to [Consuming Item] at [value/range] under [conditions]."
 - Separate requirements shall be written for: nominal interface behavior, off-nominal behavior (signal loss, out-of-range, failure), and initialization/startup sequencing where relevant.
+- Apply all language rules from SK-REQ-001 (R1–R11). For aviation programs apply interface requirement patterns from SK-REQ-002 Section C.2.
 
 **Interface Requirement Attributes:**
-Apply the same attribute set defined in the Requirements Capture, Traceability & Management skill, with the following additions:
+Apply the base attribute set from SK-REQ-003, with the following additions:
 - **ICD Reference:** The ICD document ID and section that governs this requirement.
 - **Interface Type:** Logical / Electrical / Mechanical / Fluid / Software.
 - **Interface Level:** The hierarchy level (0–4) at which this interface exists.
@@ -189,15 +194,15 @@ Apply the same attribute set defined in the Requirements Capture, Traceability &
 
 ### 5. MBSE Interface Modeling
 
-Bridge between ARP4754A system boundary conventions and SysML/MBSE interface modeling constructs to ensure interface definitions are both certification-traceable and model-consistent.
+Bridge between system boundary conventions and SysML/MBSE interface modeling constructs to ensure interface definitions are both compliance-traceable and model-consistent.
 
-**ARP4754A ↔ SysML Mapping:**
+**General ↔ SysML Mapping:**
 
-| ARP4754A Concept | SysML Representation |
+| Systems Engineering Concept | SysML Representation |
 |---|---|
 | System boundary | Block boundary in BDD |
 | External interface | Proxy Port or Flow Port on the system Block |
-| Interface between systems | Connector between parts in IBD |
+| Interface between subsystems | Connector between parts in IBD |
 | Data flow across interface | ItemFlow on IBD connector |
 | Interface requirement | «requirement» block with «satisfy» relationship to interface port |
 | Interface function | Activity with ObjectFlow crossing system boundary |
@@ -221,49 +226,59 @@ Proactively analyze the interface architecture to surface the following categori
 - Identify operational scenarios (startup, shutdown, failure response, maintenance mode) for which interface behavior has not been defined.
 
 **Interface Conflict Detection:**
-- Identify interfaces where the providing item and consuming item have specified incompatible values for the same parameter (e.g., the provider specifies a 28V output and the consumer requires a 24V input).
+- Identify interfaces where the providing item and consuming item have specified incompatible values for the same parameter.
 - Identify timing conflicts: where the update rate of a provided signal is insufficient to meet the latency requirement of the consuming function.
 - Identify load conflicts: where the aggregate current draw of all consumers on a power interface exceeds the rated output of the provider.
 - Identify protocol conflicts: where two items connected to the same data bus use incompatible message timing, addressing, or encoding.
 - Identify mechanical conflicts: where mating connector types, pin counts, or mounting patterns between two items are incompatible.
 
 **Orphaned Interface Requirements:**
-- Flag interface requirements with no parent ICD reference — these requirements are ungoverned and may not reflect a controlled interface definition.
+- Flag interface requirements with no parent ICD reference — these requirements are ungoverned.
 - Flag ICDs that contain interface definitions not reflected in any interface requirement in the requirements baseline — these definitions are unmanaged from a verification perspective.
 
 **Interface Change Impact Analysis:**
 - When an interface definition is proposed for change, automatically identify: all requirements referencing that interface, all ICDs that include that interface, all test cases that verify that interface, all systems or items on both sides of the interface, and any derived requirements that were based on the original interface definition.
-- Generate a change impact report listing all affected items and their current verification status, flagging any previously closed verification activities that may need to be re-opened.
+- Generate a change impact report listing all affected items and their current verification status.
 
 **Missing Verification Coverage:**
 - Flag interface requirements with no assigned verification method in the VCRM.
 - Flag interface definitions in ICDs that have no corresponding verification activity.
-- Flag interface requirements verified only by Inspection or Analysis where the nature of the interface (e.g., a safety-critical data interface) warrants Test as the primary method.
+- Flag interface requirements verified only by Inspection or Analysis where the nature of the interface warrants Test as the primary method.
 
 ---
 
-### 7. Certification-Specific Interface Concerns
+## Anti-Patterns
 
-#### 7.1 Safety Interface Requirements — DAL Propagation
-- Where a safety-critical function (DAL A or B) depends on data or a signal provided by another system, the interface carrying that data must be specified and verified to a level commensurate with the DAL of the dependent function.
-- A DAL A function that depends on a data input must have that input provided by a source developed to at least DAL A, OR must have an architectural mechanism (e.g., monitoring, cross-checking, independent validation) that prevents an erroneous input from causing a DAL A failure condition.
-- Document DAL propagation logic at every interface crossing a DAL boundary. This documentation is a required input to the PSSA and SSA.
-- Failure mode behavior at every safety-critical interface must be explicitly specified: what does the consuming system do when the providing system fails, provides invalid data, or provides data outside the valid range?
+| Anti-Pattern | Violation | Action |
+|---|---|---|
+| Interface with no owner on one or both sides | Unmanaged interface — no one accountable for specification or change | Assign owners before ICD is created |
+| ICD without interface requirements in the requirements baseline | Interface definition without compliance traceability | Generate interface requirements from ICD content per Section 4 |
+| Untyped port in MBSE model | Incomplete interface definition | Define port type consistent with both sides of the interface |
+| Interface requirement with no ICD reference | Ungoverned interface obligation | Link to governing ICD or create ICD if none exists |
+| Physical connector in drawing with no ICD entry | Physical interface gap | Create ICD entry and corresponding interface requirement |
+| Numeric interface value in requirement with no Design Value ID | Undeclared design value | Register value in SK-DV-001 and reference Value ID |
+| Lower-level ICD relaxing a parent ICD requirement | ICD hierarchy violation | Escalate to parent ICD owner for formal change |
 
-#### 7.2 EMI/EMC Interface Constraints — DO-160G
-- Classify every signal wire and cable bundle according to DO-160G EMI categories and apply bundle segregation requirements accordingly. Safety-critical signal wiring (DAL A/B) must be segregated from high-power or high-noise sources.
-- Specify shielding, filtering, and termination requirements for each signal category at the interface level — these are interface requirements, not installation details.
-- Ground reference connections for EMI shields must be defined in the interface specification and consistent with the aircraft grounding architecture.
-- For interfaces between equipment items, specify the conducted and radiated emissions limits and susceptibility thresholds that each side of the interface must meet, referencing the applicable DO-160G sections and categories.
+---
 
-#### 7.3 Cybersecurity Interface Considerations — DO-326A
-- Identify interfaces that cross security domain boundaries (e.g., an interface between an airborne safety system and a network with external connectivity).
-- For each security-relevant interface, capture: the security domain classification on each side, the data flows that cross the boundary, and the security controls (filtering, firewall, data diode, encryption) applied at the interface.
-- Interface specifications for security domain crossings must be reviewed against the Aircraft Information Security Vulnerability and Risk Assessment (ISVA) required by DO-326A.
-- Interfaces between safety-critical functions and any system with a lower security assurance level must be treated as potential attack surfaces and analyzed for the ability of a cyber event to propagate to a safety effect.
+## Dependencies & Interfaces
 
-#### 7.4 Power Quality & Grounding — MIL-STD-704F / DO-160G Section 16
-- Every power interface must specify the power quality envelope that the consuming equipment is required to tolerate, consistent with MIL-STD-704F (for 28VDC and 115VAC systems) or the aircraft-specific power quality standard.
-- Consuming equipment must be specified and verified to tolerate abnormal power conditions including: steady-state voltage extremes, voltage transients, power interruptions, and frequency variations (for AC systems).
-- Ground interface specifications must define: the ground reference point, the maximum allowable ground loop impedance, and the maximum allowable ground potential difference between connected equipment.
-- For eVTOL high-voltage DC bus interfaces (typically 400–800V), specify: nominal voltage, voltage operating range, isolation resistance requirements, touch-safe design provisions, and arc fault protection requirements.
+- **Depends on:** SK-REQ-001 — interface requirement writing rules (R1–R11) and EARS patterns
+- **Depends on:** SK-REQ-003 — interface requirements traceability and requirements baseline
+- **Extended by:** SK-INTF-001-AVN — aviation-specific DAL propagation, EMI/EMC, cybersecurity, and power quality interface concerns
+- **Provides to:** SK-INTF-002 — interface definitions and ICD content as input to interface governance
+- **Provides to:** SK-VV-001 — interface requirements as input to VCRM and test case generation
+- **Coordinates with:** SK-DV-001 — interface parameter values referenced in interface requirements
+
+---
+
+## Changelog
+
+| Version | Date | Author | Summary of Changes |
+|---|---|---|---|
+| 1.0 | [Date] | [Author] | Initial release — aviation-scoped |
+| 2.0 | [Date] | [Author] | Generalized to program-agnostic scope. Aviation certification content migrated to SK-INTF-001-AVN. Skill header block added. Consistency fixes applied: verification methods aligned to 5, eVTOL references removed, cross-references added, DAL references deferred to SK-CERT-001. DO-160G category column removed from wiring table (moved to addendum). |
+
+---
+
+*Authority: INCOSE Systems Engineering Handbook v5 | ISO/IEC/IEEE 15288:2023 | Extends: SK-REQ-001, SK-REQ-003*
