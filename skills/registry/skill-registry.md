@@ -28,10 +28,11 @@
 |---|---|---|---|---|---|---|---|---|
 | SK-REQ-001 | Requirements Writing | 2.1 | Requirements | General | None | SK-REQ-002 | Active | /skills/requirements/requirements-writing-skill-v2.1.md |
 | SK-REQ-002 | Requirements Writing — Aviation Certification Addendum | 1.0 | Requirements | Aviation | SK-REQ-001 | None | Active | /skills/requirements/requirements-writing-aviation-addendum-v1.0.md |
-| SK-REQ-003 | Requirements Capture, Traceability & Management | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002 | None | Active | /skills/requirements/requirements-capture-traceability-management-v1.0.md |
-| SK-REQ-004 | Requirements Field Specification | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003 | None | Active | /skills/requirements/requirements-field-specification-v1.0.md |
+| SK-REQ-003 | Requirements Capture, Traceability & Management | 2.0 | Requirements | General | SK-REQ-001 | SK-REQ-003-AVN | Active | /skills/requirements/requirements-capture-traceability-management-v2.0.md |
+| SK-REQ-003-AVN | Requirements Capture, Traceability & Management — Aviation Addendum | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-CERT-001 | None | Active | /skills/requirements/requirements-capture-traceability-management-aviation-addendum-v1.0.md |
+| SK-REQ-004 | Requirements Field Specification | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-REQ-003-AVN | None | Active | /skills/requirements/requirements-field-specification-v1.0.md |
 | SK-CERT-001 | Regulatory & Certification Expertise | 1.0 | Certification | Aviation | None | None | Active | /skills/certification/regulatory-certification-expertise-v1.0.md |
-| SK-VV-001 | Verification & Validation Planning | 1.0 | Verification | Aviation | SK-REQ-003, SK-CERT-001 | None | Active | /skills/verification/vv-planning-v1.0.md |
+| SK-VV-001 | Verification & Validation Planning | 1.0 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-CERT-001 | None | Active | /skills/verification/vv-planning-v1.0.md |
 | SK-INTF-001 | Interface Capture & Specification | 1.0 | Interfaces | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003 | None | Active | /skills/interfaces/interface-capture-specification-v1.0.md |
 | SK-INTF-002 | Interface Management | 1.0 | Interfaces | Aviation | SK-INTF-001, SK-REQ-003 | None | Active | /skills/interfaces/interface-management-v1.0.md |
 | SK-DV-001 | Design Values Library | 1.0 | Design Values | General | SK-REQ-001, SK-REQ-003 | None | Active | /skills/design-values/design-values-library-v1.0.md |
@@ -42,9 +43,42 @@
 
 | Domain | General | Aviation | Total |
 |---|---|---|---|
-| Requirements | 1 | 3 | 4 |
+| Requirements | 2 | 3 | 5 |
 | Certification | 0 | 1 | 1 |
 | Verification | 0 | 1 | 1 |
 | Interfaces | 0 | 2 | 2 |
 | Design Values | 1 | 0 | 1 |
-| **Total** | **2** | **7** | **9** |
+| **Total** | **3** | **7** | **10** |
+
+---
+
+## Pending Updates — In Progress
+
+The following skills are queued for generalization. Registry will be updated as each step completes.
+
+| Skill | Current Scope | Planned Action | Step |
+|---|---|---|---|
+| SK-INTF-001 | Aviation | Generalize base + create SK-INTF-001-AVN | Step 3 |
+| SK-INTF-002 | Aviation | Generalize base + create SK-INTF-002-AVN | Step 4 |
+| SK-VV-001 | Aviation | Generalize base + create SK-VV-001-AVN | Step 5 |
+
+---
+
+## Gap Analysis Summary
+
+| Gap ID | Description | Priority | Status |
+|---|---|---|---|
+| GAP-001 | MBSE / SysML Modeling Skill | High | Open |
+| GAP-002 | System Safety Assessment Skill | High | Open |
+| GAP-003 | Software Development Assurance (DO-178C) | Medium | Open |
+| GAP-004 | Hardware Development Assurance (DO-254) | Medium | Open |
+| GAP-005 | Trade Study & Architecture Decision Records | Medium | Open |
+| GAP-006 | Configuration Management | Medium | Open |
+| GAP-007 | Means of Compliance Documentation | Medium | Open |
+| GAP-008 | Human Factors & Crew Interface | Low–Medium | Open |
+| GAP-009 | Requirements Field Specification (General) | Low | Open |
+| GAP-010 | General-purpose SK-REQ-003 | Low | **Closed — Step 2** |
+| GAP-011 | General-purpose SK-INTF-001 | Low | In Progress — Step 3 |
+| GAP-012 | General-purpose SK-INTF-002 | Low | In Progress — Step 4 |
+| GAP-013 | General-purpose SK-VV-001 | Low | In Progress — Step 5 |
+| GAP-014 | Skill header blocks missing from all skills | Low | **Closed — Step 1** |
