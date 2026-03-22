@@ -1,3 +1,16 @@
+Skill Name:        Requirements Writing
+Skill ID:          SK-REQ-001
+Version:           2.1
+Scope:             General
+Domain:            Requirements
+Dependencies:      None
+Extended By:       SK-REQ-002
+Status:            Active
+Author:            [Author]
+Date Created:      [Date]
+Last Modified:     [Date]
+Description:       Authors, reviews, and improves requirement statements using INCOSE GtWR v4 best practices and EARS syntax across three operating modes, enforcing singular, verifiable, unambiguous obligations with correct modal keywords, pattern-matched structure, and assigned verification methods.
+
 # Requirements Writing Skill
 **Authority:** INCOSE Guide to Writing Requirements (GtWR) v4, June 2023
 **Companion Standard:** EARS (Easy Approach to Requirements Syntax)
