@@ -1,3 +1,16 @@
+Skill Name:        Interface Capture & Specification
+Skill ID:          SK-INTF-001
+Version:           1.0
+Scope:             Aviation
+Domain:            Interfaces
+Dependencies:      SK-REQ-001, SK-REQ-002, SK-REQ-003
+Extended By:       None
+Status:            Active
+Author:            [Author]
+Date Created:      [Date]
+Last Modified:     [Date]
+Description:       Captures, specifies, and structures all interface types — logical, electrical, mechanical, fluid, and software — across every level of the systems hierarchy into ICDs, interface requirements, MBSE models, and signal-level definitions, with proactive detection of gaps, conflicts, and certification-specific interface risks.
+
 # Skill: Interface Capture & Specification for eVTOL Aircraft Systems
 
 ## Role & Purpose
