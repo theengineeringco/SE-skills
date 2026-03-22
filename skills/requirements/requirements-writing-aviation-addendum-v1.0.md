@@ -1,3 +1,16 @@
+Skill Name:        Requirements Writing — Aviation Certification Addendum
+Skill ID:          SK-REQ-002
+Version:           1.0
+Scope:             Aviation
+Domain:            Requirements
+Dependencies:      SK-REQ-001
+Extended By:       None
+Status:            Active
+Author:            [Author]
+Date Created:      [Date]
+Last Modified:     [Date]
+Description:       Extends the base Requirements Writing skill for FAA certification programs by adding aviation-specific requirement types, DAL-aware authoring rules, safety and interface requirement patterns, derived requirement discipline, Similarity as a fifth verification method, and aerospace anti-patterns aligned with ARP4754A, ARP4761, and AC 25.1309.
+
 # Requirements Writing Skill — Aviation Certification Addendum
 **Extends:** Requirements Writing Skill v2.0 (INCOSE GtWR v4 / EARS)
 **Authority:** ARP4754A, ARP4761, DO-178C, DO-254, FAA AC 25.1309, AC 23.1309
