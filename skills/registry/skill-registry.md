@@ -32,7 +32,8 @@
 | SK-REQ-003-AVN | Requirements Capture, Traceability & Management — Aviation Addendum | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-CERT-001 | None | Active | /skills/requirements/requirements-capture-traceability-management-aviation-addendum-v1.0.md |
 | SK-REQ-004 | Requirements Field Specification | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-REQ-003-AVN | None | Active | /skills/requirements/requirements-field-specification-v1.0.md |
 | SK-CERT-001 | Regulatory & Certification Expertise | 1.0 | Certification | Aviation | None | None | Active | /skills/certification/regulatory-certification-expertise-v1.0.md |
-| SK-VV-001 | Verification & Validation Planning | 1.0 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-CERT-001 | None | Active | /skills/verification/vv-planning-v1.0.md |
+| SK-VV-001 | Verification & Validation Planning | 2.0 | Verification | General | SK-REQ-003 | SK-VV-001-AVN | Active | /skills/verification/vv-planning-v2.0.md |
+| SK-VV-001-AVN | Verification & Validation Planning — Aviation Addendum | 1.0 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-CERT-001 | None | Active | /skills/verification/vv-planning-aviation-addendum-v1.0.md |
 | SK-INTF-001 | Interface Capture & Specification | 2.0 | Interfaces | General | SK-REQ-001, SK-REQ-003 | SK-INTF-001-AVN | Active | /skills/interfaces/interface-capture-specification-v2.0.md |
 | SK-INTF-001-AVN | Interface Capture & Specification — Aviation Addendum | 1.0 | Interfaces | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-REQ-003-AVN, SK-INTF-001, SK-CERT-001 | None | Active | /skills/interfaces/interface-capture-specification-aviation-addendum-v1.0.md |
 | SK-INTF-002 | Interface Management | 2.0 | Interfaces | General | SK-INTF-001, SK-REQ-003 | SK-INTF-002-AVN | Active | /skills/interfaces/interface-management-v2.0.md |
@@ -47,18 +48,16 @@
 |---|---|---|---|
 | Requirements | 2 | 3 | 5 |
 | Certification | 0 | 1 | 1 |
-| Verification | 0 | 1 | 1 |
+| Verification | 1 | 1 | 2 |
 | Interfaces | 2 | 4 | 6 |
 | Design Values | 1 | 0 | 1 |
-| **Total** | **5** | **9** | **14** |
+| **Total** | **6** | **9** | **15** |
 
 ---
 
-## Pending Updates — In Progress
+## Pending Updates
 
-| Skill | Current Scope | Planned Action | Step |
-|---|---|---|---|
-| SK-VV-001 | Aviation | Generalize base + create SK-VV-001-AVN | Step 5 |
+None. All generalization steps complete.
 
 ---
 
@@ -78,5 +77,5 @@
 | GAP-010 | General-purpose SK-REQ-003 | Low | **Closed — Step 2** |
 | GAP-011 | General-purpose SK-INTF-001 | Low | **Closed — Step 3** |
 | GAP-012 | General-purpose SK-INTF-002 | Low | **Closed — Step 4** |
-| GAP-013 | General-purpose SK-VV-001 | Low | In Progress — Step 5 |
+| GAP-013 | General-purpose SK-VV-001 | Low | **Closed — Step 5** |
 | GAP-014 | Skill header blocks missing from all skills | Low | **Closed — Step 1** |
