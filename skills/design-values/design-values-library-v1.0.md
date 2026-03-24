@@ -1,6 +1,6 @@
 Skill Name:        Design Values Library
 Skill ID:          SK-DV-001
-Version:           1.1
+Version:           1.2
 Scope:             General
 Domain:            Design Values
 Dependencies:      SK-REQ-001, SK-REQ-003
@@ -21,6 +21,25 @@ Verification methods: Not directly governed by this skill. Design values support
 ---
 
 ## Core Competencies
+
+### Data Model Alignment Note
+
+The AI-enabled SE tool data model defines a `designValue` entity with canonical fields:
+- `name`
+- `description`
+- `value`
+- `unit`
+- `sourceReference`
+- `maturityStage` (`Assumed|Analyzed|Tested|Qualified`)
+
+This skill remains the governance authority for richer lifecycle controls, but when operating inside the tool:
+- Use the tool entity and field names exactly as listed above.
+- Map this skill's richer source fields to `sourceReference`.
+- Map this skill's maturity model to tool `maturityStage` as follows:
+  - Stage 1 — Assumed → `Assumed`
+  - Stage 2 — Analyzed → `Analyzed`
+  - Stage 3 — Tested → `Tested`
+  - Stage 4 — Certified / Qualified → `Qualified`
 
 ### 1. Design Values Library Architecture
 
@@ -259,3 +278,4 @@ Continuously analyze the Design Values Library and its relationships to the requ
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release. |
 | 1.1 | [Date] | [Author] | Updated metadata and dependency interfaces to reflect SK-VER-001 consumption (`Extended By: SK-VER-001`). |
+| 1.2 | [Date] | [Author] | Added explicit alignment to SE tool `designValue` entity fields (`name`, `description`, `value`, `unit`, `sourceReference`, `maturityStage`) and normalized maturity mapping to tool enums. |

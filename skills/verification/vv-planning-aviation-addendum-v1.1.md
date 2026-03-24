@@ -30,6 +30,8 @@ This addendum extends SK-VV-001 for use in FAA aviation certification programs. 
 
 Where this addendum conflicts with the base skill, this addendum takes precedence for aviation certification work.
 
+**SE tool data model alignment:** This addendum inherits the canonical entity and field naming rules defined in `SK-DM-001`. In particular, use `testPlan`, `testCase`, `testRun`, and `testResults` entity names and preserve the exact status enums and field names used by that schema.
+
 ---
 
 ## Section A: DAL-Specific Verification Independence Rules

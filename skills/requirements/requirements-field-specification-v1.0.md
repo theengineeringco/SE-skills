@@ -1,86 +1,86 @@
 Skill Name:        Requirements Field Specification
 Skill ID:          SK-REQ-004
-Version:           1.0
+Version:           1.1
 Scope:             General
 Domain:            Requirements
-Dependencies:      SK-REQ-001, SK-REQ-003, SK-VV-001
+Dependencies:      SK-REQ-001, SK-REQ-003, SK-VV-001, SK-DM-001
 Extended By:       None
 Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Defines the canonical requirements record schema, phase-gated completeness rules, and deterministic verification-status rollup logic so every requirement can be traced directly to test cases, test runs, and verification results.
+Description:       Defines the canonical `requirement` entity field schema for the SE tool, phase-gated completeness rules, and deterministic `verificationStatus` rollup so every requirement traces directly to testCase, testRun, and testResults records.
 
 ---
 
 # Skill: Requirements Field Specification
 
 ## Role & Purpose
-You are an expert in requirements data architecture. Your function is to define and enforce the canonical field schema for requirement records used across the skill library so traceability is deterministic and auditable. This skill standardizes required identifiers, linkage fields, and status-derivation logic across requirements, VCRM, and verification artifacts. For requirement language quality defer to SK-REQ-001. For requirements architecture and traceability principles defer to SK-REQ-003. For V&V process and closure rules defer to SK-VV-001.
+You are an expert in requirements data architecture. Your function is to define and enforce the canonical SE tool field schema for `requirement` records so traceability is deterministic and auditable. This skill standardizes required identifiers, linkage fields, and status-derivation logic across `requirement`, `testCase`, `testRun`, and `testResults` artifacts. For requirement language quality defer to SK-REQ-001. For requirements architecture and traceability principles defer to SK-REQ-003. For V&V process and closure rules defer to SK-VV-001. For the full repository-wide data model, defer to SK-DM-001.
 
 ---
 
 ## Core Competencies
 
-### 1. Canonical Requirement Record Schema
+### 1. Canonical `requirement` Entity Schema
 
-Every requirement record shall contain the following fields.
+Every `requirement` record shall contain and align to the following SE tool fields.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `requirement_id` | String | Yes | Unique requirement identifier in program format (e.g., SYS-001). |
-| `requirement_statement` | Text | Yes | Requirement text compliant with SK-REQ-001. |
-| `source_ref` | String/List | Yes | Origin reference (stakeholder need, regulation, decision record). |
-| `allocation` | String/List | Yes | Owning system/item/component responsible for satisfaction. |
-| `verification_method` | Enum/List | Yes | `Test` / `Inspection` / `Analysis` / `Demonstration` / `Similarity`. |
-| `verification_status` | Enum | Yes | `Open` / `In Work` / `Verified` / `Closed` / `Waived`. |
-| `parent_requirement_ids` | List | Conditional | Required unless `derived_flag = true`. |
-| `child_requirement_ids` | List | No | Downstream decomposition references. |
-| `derived_flag` | Boolean | Yes | True if requirement is design-derived. |
-| `derivation_rationale` | Text | Conditional | Required when `derived_flag = true`. |
-| `vcrm_record_ids` | List | Yes | Linked VCRM rows for this requirement. Non-empty when verification method is assigned. |
-| `test_case_ids` | List | Yes | Linked test case / analysis record IDs. Non-empty when verification method is assigned. |
-| `latest_test_run_id` | String | Conditional | Required when status is `In Work` or beyond. |
-| `latest_verification_result_id` | String | Conditional | Required when status is `In Work` or beyond. |
-| `baseline_status` | Enum | Yes | `Draft` / `Preliminary Baseline` / `Released Baseline` / `Superseded`. |
-| `change_history_ref` | List | No | Change record IDs that modified the requirement. |
-| `design_value_ids` | List | No | Referenced design value IDs where numeric thresholds apply. |
+| `name` | string | Yes | Requirement name/title. |
+| `description` | richText | Yes | Requirement statement and conditions. |
+| `owner` | userId | Yes | Responsible owner. |
+| `stage` | enum | Yes | `Draft` / `In Review` / `Released`. |
+| `value` | number | Conditional | Numeric value when applicable. |
+| `unit` | string | Conditional | Unit for `value` where applicable. |
+| `requirementType` | string | Yes | Program-defined requirement class (e.g., FUNC/PERF/SAFE). |
+| `dal` | string | Conditional | DAL classification when applicable. |
+| `derived` | enum | Yes | `Yes` / `No`. |
+| `derivedRationale` | string | Conditional | Required when `derived = Yes`. |
+| `verificationMethod` | enumArray | Yes | `Test` / `Analysis` / `Inspection` / `Demonstration` / `Similarity`. |
+| `pass/FailCriteria` | string | Yes | Measurable pass/fail rule text. |
+| `verificationStatus` | enum | Yes | `Passed` / `Failed` / `Pending` / `Not Applicable` / `In Progress`. |
+| `independenceRequired` | enum | Conditional | `Yes` / `No` when independence applies. |
+| `aiConfidenceScore` | number | No | AI confidence for generated content. |
+| `humanReviewed` | boolean | No | Human review completion flag. |
+| `rationale` | string | No | Additional rationale or trace notes. |
 
 ---
 
-### 2. Required Traceability Tuple
+### 2. Required Traceability Tuple (cross-entity)
 
-For any requirement with an assigned verification method, the following tuple is mandatory and machine-checkable:
+For any `requirement` with an assigned `verificationMethod`, the following tuple is mandatory and machine-checkable:
 
-`(requirement_id, vcrm_record_id, test_case_id, latest_test_run_id, latest_verification_result_id)`
+`(requirement.name, testCase.name, testRun.name, testResults.name)`
 
 Rules:
-- A requirement is non-compliant if any element of the tuple is missing when status is `In Work`, `Verified`, `Closed`, or `Waived`.
-- `latest_verification_result_id` must reference a result that links to the same `requirement_id`, `vcrm_record_id`, and `test_case_id`.
-- `latest_test_run_id` must match the parent run of `latest_verification_result_id`.
+- A requirement is non-compliant if any tuple element is missing when `verificationStatus` is `In Progress`, `Passed`, or `Failed`.
+- `testResults` must trace to the same `requirement` and linked `testCase`.
+- The most recent `testRun` associated with a requirement shall be used for current status determination.
 
 ---
 
-### 3. Deterministic Verification Status Rollup
+### 3. Deterministic `verificationStatus` Rollup
 
-Requirement status shall be computed from the latest non-superseded verification result.
+`requirement.verificationStatus` shall be computed from the latest linked `testResults` record.
 
 **Latest result selection:**
-1. Candidate set = all linked results for the requirement that are not superseded.
-2. Sort by `executed_at` descending.
-3. If process requires independent review, break ties using `reviewed_at` descending.
+1. Candidate set = all linked `testResults` for the requirement.
+2. Sort by associated `testRun` execution order (most recent first).
+3. If ties exist, use latest update timestamp.
 
 **Status mapping:**
-- No valid candidate result: `Open`
-- Latest candidate exists but closure criteria incomplete: `In Work`
-- Latest candidate passes criteria and required reviews complete: `Verified`
-- VCRM closure complete with approved evidence: `Closed`
-- Approved waiver/deviation recorded: `Waived`
+- No valid candidate result: `Pending`
+- Latest candidate has `status = Pass`: `Passed`
+- Latest candidate has `status = Fail`: `Failed`
+- Latest candidate has `status = Blocked` or execution not complete: `In Progress`
+- Requirement explicitly out of verification scope: `Not Applicable`
 
 **Constraints:**
-- Status must be derived, not manually authored, for `Verified`, `Closed`, and `Waived`.
-- A requirement cannot be `Closed` unless `latest_verification_result_id` and `vcrm_record_ids` are populated and consistent.
-- Closed evidence is immutable; re-verification creates a new result and updates latest pointers.
+- Status should be derived, not manually authored, for `Passed` and `Failed`.
+- A requirement cannot be `Passed`/`Failed` unless linked `testResults` evidence exists.
+- New runs/results supersede prior status for current-state reporting.
 
 ---
 
@@ -88,22 +88,22 @@ Requirement status shall be computed from the latest non-superseded verification
 
 | Program Phase | Required Minimum Fields |
 |---|---|
-| Early capture / SRR-equivalent | `requirement_id`, `requirement_statement`, `source_ref`, `allocation`, `verification_method`, `derived_flag` |
-| Architecture maturation / PDR-equivalent | All above + `parent_requirement_ids` or derivation rationale, `vcrm_record_ids`, initial `test_case_ids` |
-| Design-complete / CDR-equivalent | All above + full traceability tuple except latest run/result if execution not started |
-| Test readiness / TRR-equivalent | Full traceability tuple populated for in-scope executable requirements |
-| Closure | Full traceability tuple + `verification_status` derived to `Closed` or `Waived` with approved evidence |
+| Early capture / SRR-equivalent | `name`, `description`, `owner`, `stage`, `requirementType`, `derived`, `verificationMethod` |
+| Architecture maturation / PDR-equivalent | All above + `dal` (if applicable), `derivedRationale` (if derived), `pass/FailCriteria` |
+| Design-complete / CDR-equivalent | All above + link to at least one `testCase`, and `verificationStatus` initialized (`Pending` or `Not Applicable`) |
+| Test readiness / TRR-equivalent | Linkage to `testCase` + planned `testRun` context available |
+| Closure | Linked `testResults` evidence and `verificationStatus` derived to `Passed`, `Failed`, or `Not Applicable` |
 
 ---
 
 ### 5. Proactive Integrity Checks
 
-- Flag requirements with assigned verification method and empty `vcrm_record_ids`.
-- Flag requirements with assigned verification method and empty `test_case_ids`.
-- Flag status `Verified`/`Closed`/`Waived` with missing latest result pointer.
-- Flag mismatch between requirement status and computed latest-result status.
-- Flag broken references (IDs not found in baseline).
-- Flag numeric requirement thresholds with no linked `design_value_ids`.
+- Flag requirements with assigned `verificationMethod` and no linked `testCase`.
+- Flag requirements with `verificationStatus` = `Passed`/`Failed` and no linked `testResults`.
+- Flag mismatch between requirement `verificationStatus` and computed latest-result status.
+- Flag `derived = Yes` with empty `derivedRationale`.
+- Flag numeric `value` without `unit`.
+- Flag `aiConfidenceScore` outside accepted range if program defines one.
 
 ---
 
@@ -111,11 +111,11 @@ Requirement status shall be computed from the latest non-superseded verification
 
 | Anti-Pattern | Violation | Action |
 |---|---|---|
-| Requirement marked `Closed` without latest verification result ID | Non-auditable closure claim | Recompute status and enforce tuple completion |
-| Requirement has VCRM row but no linked test case IDs | Incomplete verification chain | Add/associate test cases before execution |
-| Manual status override to `Verified` or `Closed` | Non-deterministic status control | Enforce derived-status logic from latest result |
-| Broken tuple reference (run/result points to different requirement) | Traceability corruption | Quarantine record and repair links before use |
-| Released baseline requirement with unresolved parent/derived basis | Uncontrolled origin | Add parent linkage or derivation rationale |
+| Requirement marked `Passed`/`Failed` with no linked `testResults` | Non-auditable verification claim | Recompute status and enforce tuple completion |
+| Requirement has `verificationMethod` but no linked test case | Incomplete verification chain | Add/associate `testCase` before execution |
+| Manual status override to `Passed` or `Failed` | Non-deterministic status control | Enforce derived-status logic from latest result |
+| `derived = Yes` with empty `derivedRationale` | Uncontrolled derivation | Populate rationale before release |
+| `value` set with no `unit` | Ambiguous quantitative obligation | Add explicit unit |
 
 ---
 
@@ -124,6 +124,7 @@ Requirement status shall be computed from the latest non-superseded verification
 - **Depends on:** SK-REQ-001 — statement quality and requirement semantics.
 - **Depends on:** SK-REQ-003 — hierarchy and bidirectional traceability architecture.
 - **Depends on:** SK-VV-001 — VCRM process, closure criteria, and re-verification triggers.
+- **Depends on:** SK-DM-001 — authoritative SE tool entity/field definitions and enums.
 - **Provides to:** SK-VER-001 — data-model alignment for test case/result linkage.
 - **Provides to:** SK-INTF-002 — interface-requirement verification field consistency.
 
@@ -134,6 +135,7 @@ Requirement status shall be computed from the latest non-superseded verification
 | Version | Date | Author | Summary of Changes |
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release. Added canonical requirement record schema, mandatory traceability tuple, deterministic latest-result status rollup, and phase-gated completeness rules. |
+| 1.1 | [Date] | [Author] | Aligned to SE tool data model (`requirement` entity) including exact field names (`pass/FailCriteria`, `verificationStatus`, `aiConfidenceScore`, `humanReviewed`) and status rollup mapped to `testResults`/`testRun` entities. |
 
 ---
 

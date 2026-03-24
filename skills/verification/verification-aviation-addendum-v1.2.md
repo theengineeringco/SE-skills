@@ -25,9 +25,15 @@ This addendum extends SK-VER-001 for use in FAA aviation certification programs 
 
 Where this addendum conflicts with the base skill, this addendum takes precedence for aviation certification work.
 
+**SE tool data model alignment:** Entity names and base fields align to the canonical schema in SK-DM-001:
+- `testRun` (base) + aviation extensions in this addendum
+- `testCase` (base) + aviation extensions in this addendum
+- `testResults` (base) + aviation extensions in this addendum
+- `testPlan` (base) + aviation extensions in this addendum
+
 ---
 
-## Section A: Verification Plan — Aviation Extensions
+## Section A: testPlan — Aviation Extensions
 
 ### Additional Fields
 
@@ -93,23 +99,23 @@ Where this addendum conflicts with the base skill, this addendum takes precedenc
 
 ---
 
-## Section D: Verification Result — Aviation Extensions
+## Section D: testResults — Aviation Extensions
 
 ### Additional Fields
 
 | Field | Type | Description |
 |---|---|---|
-| `review_status` | Enum | `Pending Review` / `Approved` / `Rejected` — independent review state, distinct from `vcrm_status` |
+| `review_status` | Enum | `Pending Review` / `Approved` / `Rejected` — independent review state, distinct from `verificationStatus` |
 | `reviewed_at` | Timestamp | When the independent review was completed |
-| `anomaly_report_ref` | String | Reference to a formal Problem Report (PR) or Anomaly Report — **required** when `execution_status = Fail`; must be populated before `vcrm_status` may advance beyond `In Work` |
+| `anomaly_report_ref` | String | Reference to a formal Problem Report (PR) or Anomaly Report — **required** when `status = Fail`; must be populated before `verificationStatus` may advance beyond `In Progress` |
 | `objective_satisfied` | Boolean | Explicit flag that this result satisfies its mapped standard objective — required for compliance matrix generation |
 | `retention_class` | Enum | Document retention classification per the applicant's DDP / PSAC |
 
 ### Recommendations
-- `anomaly_report_ref` must be treated as a **required field** when `execution_status = Fail` in aviation programs. Every failure must be formally dispositioned via a Problem Report before the verification activity can be closed. Enforce this as a workflow gate: `vcrm_status` may not advance to `Verified` or `Closed` while `execution_status = Fail` and `anomaly_report_ref` is empty.
+- `anomaly_report_ref` must be treated as a **required field** when `status = Fail` in aviation programs. Every failure must be formally dispositioned via a Problem Report before the verification activity can be closed. Enforce this as a workflow gate: `verificationStatus` may not advance to `Passed` while `status = Fail` and `anomaly_report_ref` is empty.
 - `objective_satisfied` is the cleanest signal for compliance matrix generation — it confirms not just that a test passed, but that the relevant standard objective was met. This distinction matters at SOI audits where the FAA evaluates objective satisfaction, not just test pass rates.
-- Results at **DAL A** require a second signature in `reviewed_by` (from the base skill) before `vcrm_status` may be set to `Closed`. Enforce this as a workflow gate. (Authority: SK-VV-001-AVN Section A.)
-- `review_status` and `vcrm_status` serve different purposes: `review_status` tracks the independent reviewer's disposition of the result; `vcrm_status` tracks the compliance closure state. A result can be `review_status = Approved` but still `vcrm_status = In Work` if the anomaly disposition is pending.
+- Results at **DAL A** require a second signature in `reviewed_by` (from the base skill) before `verificationStatus` may be set to `Passed`. Enforce this as a workflow gate. (Authority: SK-VV-001-AVN Section A.)
+- `review_status` and `verificationStatus` serve different purposes: `review_status` tracks the independent reviewer's disposition of the result; `verificationStatus` tracks requirement-level compliance state. A result can be `review_status = Approved` but still `verificationStatus = In Progress` if the anomaly disposition is pending.
 
 ---
 
@@ -119,7 +125,7 @@ The following node types are not defined in this skill but are referenced by avi
 
 | Node | Purpose | Referenced By |
 |---|---|---|
-| **Problem Report (PR)** | Formal anomaly tracking required by DO-178C / DO-254. Every `execution_status = Fail` result must reference a PR. | `anomaly_report_ref` on Verification Result |
+| **Problem Report (PR)** | Formal anomaly tracking required by DO-178C / DO-254. Every `status = Fail` result must reference a PR. | `anomaly_report_ref` on testResults |
 | **Configuration Index** | Exact HW/SW/FW configuration under test; required for certification traceability. Governed by SK-INTF-002-AVN Section D. | `configuration_index` on Test Run |
 | **Stage of Involvement (SOI) Record** | Tracks DER/ACO review milestones (SOI #1–#4) against the verification program. | `soi_stage` on Verification Plan |
 | **Means of Compliance (MOC) Record** | Maps requirements to their approved compliance method (MOC 1–MOC 10). | `moc_ref` on Verification Plan |
@@ -150,9 +156,9 @@ Add the following to the base skill anti-pattern table for aviation programs:
 |---|---|---|
 | DAL A/B Test Case with `structural_coverage_target = N/A` | Missing coverage objective for safety-critical software | Set correct coverage target per DAL; flag as compliance gap |
 | DAL A/B Verification Plan with no `robustness_test = true` Test Cases | Abnormal range testing not planned | Add robustness test cases and link to PSSA failure conditions |
-| Verification Result with `execution_status = Fail` and no `anomaly_report_ref` | Failure without formal disposition — not closeable | Create Problem Report before advancing `vcrm_status` |
-| DAL A result with `vcrm_status = Closed` and no `reviewed_by` | Closed without required independent review | Re-open; obtain and record independent reviewer sign-off |
-| `objective_satisfied` not populated on closed results | Compliance matrix cannot be generated | Populate before `vcrm_status = Closed` — enforce as required field at closure |
+| testResults record with `status = Fail` and no `anomaly_report_ref` | Failure without formal disposition — not closeable | Create Problem Report before advancing `verificationStatus` |
+| DAL A result with `verificationStatus = Passed` and no `reviewed_by` | Passed without required independent review | Re-open; obtain and record independent reviewer sign-off |
+| `objective_satisfied` not populated on passed results | Compliance matrix cannot be generated | Populate before `verificationStatus = Passed` — enforce as required field at closure |
 | Test Run with `configuration_index` inconsistent with conformity inspection record | Test evidence tied to unapproved configuration | Align with SK-INTF-002-AVN Section D; assess evidence validity |
 | `soi_stage` not updated after SOI review | Audit readiness state not current | Update at each SOI milestone; use to gate downstream plan approvals |
 

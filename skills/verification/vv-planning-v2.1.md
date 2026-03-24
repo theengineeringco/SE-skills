@@ -23,12 +23,12 @@ For requirements baseline and traceability defer to SK-REQ-003. For verification
 
 **Verification methods governed by this skill:** Test (T), Inspection (I), Analysis (A), Demonstration (D), Similarity (S). Definitions in SK-REQ-001. This skill provides the program-level application framework for all five methods.
 
-**Canonical verification status vocabulary (all artifacts governed by this skill):** `Open / In Work / Verified / Closed / Waived`.
-- `Open`: no valid verification result is available yet.
-- `In Work`: verification has started, but closure conditions are not met.
-- `Verified`: latest valid verification result satisfies criteria and required reviews are complete.
-- `Closed`: formal closure complete in VCRM with approved evidence reference.
-- `Waived`: approved waiver/deviation accepted in VCRM per program process.
+**SE tool data-model alignment (SK-DM-001):**
+- Use entity names exactly: `testPlan`, `testCase`, `testRun`, and `testResults`.
+- Use field names exactly where provided by the SE tool schema (for example: `pass/FailCriteria`, `expectedResults`, `executedBy`, `entryCriteria`).
+- For `testResults.status`, use `Pass / Fail / Blocked / Skipped`.
+- For `requirement.verificationStatus`, use `Passed / Failed / Pending / Not Applicable / In Progress`.
+- For `testCase.status`, use `Draft / Ready / Depracated` per the current schema.
 
 ---
 
@@ -131,22 +131,26 @@ For each working-level V&V plan, generate a corresponding Test Plan defining the
 
 ---
 
-### 4. Test Case Generation
+### 4. testCase Generation
 
-Generate structured test cases to verify individual requirements or logical groups of closely related requirements. Each test case is a self-contained, executable verification record.
+Generate structured `testCase` entities to verify individual requirements or logical groups of closely related requirements. Each `testCase` is a self-contained, executable verification record.
 
-**Test Case Required Attributes:**
-- **Test Case ID:** Unique identifier traceable to the governing Test Plan.
-- **Title:** Short descriptive name identifying the function or requirement being verified.
-- **Objective:** A clear statement of what the test case is intended to demonstrate.
-- **Applicable Requirements:** One or more requirement IDs from the VCRM that this test case partially or fully verifies.
-- **VCRM Record ID(s):** One or more VCRM row IDs explicitly linked to this test case.
-- **Preconditions:** The system state, configuration, and environmental conditions that must exist before the test begins.
-- **Test Article Configuration:** Part numbers, software versions, and configuration baseline under test.
-- **Test Steps:** Numbered, unambiguous procedural steps. Each step shall specify: the action to be performed, the expected system response, and the data to be recorded.
-- **Pass/Fail Criteria:** Explicit, measurable criteria traceable to the requirement(s) being verified.
-- **Failure Reporting Reference:** Reference to the anomaly or problem reporting process if the test case fails.
-- **Independence Requirement:** Whether the test must be conducted or witnessed by an independent party.
+**testCase Required Attributes (SE tool schema):**
+- `name`
+- `description`
+- `owner`
+- `type` (`Functional|Performance|Regression|Smoke|Integration|Safety`)
+- `status` (`Draft|Ready|Depracated`)
+- `priority` (`Critical|High|Medium|Low`)
+- `preconditions`
+- `steps`
+- `expectedResults`
+- `postconditions`
+- `pass/FailCriteria`
+
+**Required traceability attributes (cross-entity links):**
+- Requirement ID(s) linked to the `testCase` in the VCRM or equivalent traceability table.
+- Governing `testPlan` reference.
 
 **Test Case Generation Rules:**
 - Generate test cases at the lowest level of the hierarchy where the requirement is verifiable.
@@ -228,10 +232,10 @@ The VCRM is the authoritative record linking every requirement to its verificati
 | Governing Plan Reference | ID of the Test Plan or V&V Plan governing this verification activity |
 | Test Case / Analysis Record ID | ID(s) of the test case(s) or analysis record(s) that verify this requirement |
 | Latest Test Run ID | ID of the most recent run that produced the current requirement status determination |
-| Latest Verification Result ID | ID of the most recent non-superseded verification result used for status determination |
-| Pass/Fail Criteria | Explicit, measurable criteria traceable to the requirement statement |
+| Latest `testResults` ID | ID of the most recent linked `testResults` record used for status determination |
+| pass/FailCriteria | Explicit, measurable criteria traceable to the requirement statement |
 | Verification Result Reference | Document ID and revision of the approved evidence record |
-| Verification Status | Open / In Work / Verified / Closed / Waived |
+| requirement.verificationStatus | Passed / Failed / Pending / Not Applicable / In Progress |
 | Closure Date | Date on which the verification activity was formally closed |
 | Anomaly References | IDs of any open or closed anomaly reports associated with this verification activity |
 | Notes / Rationale | Any qualification, limitation, or constraint on the verification evidence |
@@ -241,8 +245,8 @@ The VCRM is the authoritative record linking every requirement to its verificati
 - No requirement may be set to Closed unless: a verification result reference exists, pass/fail criteria have been evaluated against the result, and the result has been reviewed and accepted by the responsible engineer.
 - Requirements verified by Similarity must reference the SAR as their verification result document.
 - VCRM closure metrics must be reportable at any point in the program as a compliance readiness indicator.
-- Requirement status is derived from the latest non-superseded verification result (by `executed_at`, then review completion timestamp where required), not manually authored.
-- Any VCRM row missing one of Requirement ID, Test Case/Analysis Record ID, Latest Test Run ID, or Latest Verification Result ID is a traceability integrity failure.
+- Requirement `verificationStatus` should be derived from linked `testResults.status` values and approval logic, not manually authored where automation is available.
+- Any VCRM row missing one of Requirement ID, `testCase` ID, latest `testRun` ID, or latest `testResults` ID is a traceability integrity failure.
 
 ---
 
@@ -260,14 +264,14 @@ Formal verification closure converts a completed verification activity into comp
 7. The VCRM record has been updated to Closed status with the result reference and closure date.
 
 **Authoritative Requirement Status Derivation:**
-- Requirement status shall be computed from the latest non-superseded verification result linked through the VCRM row.
-- Status mapping:
-  - No valid result: `Open`
-  - Execution or review in progress: `In Work`
-  - Latest result passes criteria and required reviews complete: `Verified`
-  - Formal VCRM closure complete with approved evidence: `Closed`
-  - Approved waiver/deviation path accepted: `Waived`
-- A requirement may not move to `Verified` or `Closed` unless Latest Verification Result ID is populated and traceable to both Test Run ID and Test Case/Analysis Record ID.
+- Requirement `verificationStatus` shall be computed from the latest linked `testResults` record (or rollup of the latest applicable results for multi-method requirements).
+- Status mapping to SE tool values:
+  - No valid result: `Pending`
+  - Execution or review in progress: `In Progress`
+  - Latest approved result is pass: `Passed`
+  - Latest approved result is fail: `Failed`
+  - Requirement formally waived / not applicable by approved disposition: `Not Applicable`
+- A requirement may not move to `Passed`, `Failed`, or `Not Applicable` unless a linked `testResults` record and corresponding `testRun`/`testCase` references are present.
 
 **Compliance Substantiation at Program Level:**
 - A Verification Compliance Report (VCR) or equivalent closure document must be generated for each element of the compliance basis, summarizing: verification activities conducted, evidence generated, and the determination of compliance.
@@ -289,8 +293,8 @@ The following events require re-evaluation of previously closed verification act
 |---|---|---|
 | Requirement with no VCRM record | Unmanaged compliance gap | Create VCRM record before requirements baseline is finalized |
 | Verification method assigned as "TBD" at design-complete review | Unplanned verification — compliance gap | Assign method before design-complete milestone; flag as critical open item |
-| VCRM row missing Latest Verification Result ID or Latest Test Run ID | Requirement status cannot be evidence-derived | Populate direct links before status update or closure |
-| Requirement manually marked Verified/Closed without latest result linkage | Non-deterministic closure claim | Recompute status from latest linked result and update VCRM fields |
+| VCRM row missing latest `testResults` ID or latest `testRun` ID | Requirement status cannot be evidence-derived | Populate direct links before status update or closure |
+| Requirement manually marked Passed/Failed/Not Applicable without linked result | Non-deterministic closure claim | Recompute status from latest linked result and update VCRM fields |
 | Pass/fail criteria stated as "per engineering judgment" | Unverifiable closure criterion | Replace with explicit, measurable criteria traceable to the requirement |
 | Qualification test conducted on non-conforming article without delta assessment | Test evidence of indeterminate validity | Document configuration delta and assess impact before using as compliance evidence |
 | Acceptance test result used to close a design requirement | Conflation of evidence types | Tag correctly in VCRM; acceptance evidence closes production conformance only |
@@ -315,7 +319,8 @@ The following events require re-evaluation of previously closed verification act
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release — aviation-scoped |
 | 2.0 | [Date] | [Author] | Generalized to program-agnostic scope. Aviation certification content migrated to SK-VV-001-AVN. Skill header block added. Consistency fixes applied: DAL replaced with assurance level, DO-178C/DO-254/DO-160G references removed, FAA-specific closure documents removed, eVTOL references removed, Demonstration added as fifth method, cross-references added. |
-| 2.1 | [Date] | [Author] | Standardized verification status vocabulary (`Open / In Work / Verified / Closed / Waived`). Added comprehensive Test Plan Document Template and audit-readiness checklist. Added mandatory direct linkage fields (`VCRM Record ID`, `Latest Test Run ID`, `Latest Verification Result ID`). Added authoritative latest-result requirement status derivation rules and related anti-pattern checks. |
+| 2.1 | [Date] | [Author] | Standardized verification status vocabulary and improved planning rigor with a comprehensive Test Plan Document Template, audit-readiness checklist, and stronger latest-result traceability rules. |
+| 2.2 | [Date] | [Author] | Aligned this skill to SE tool schema naming and enums (`testPlan`, `testCase`, `testRun`, `testResults`, `pass/FailCriteria`, requirement `verificationStatus` values). Added explicit schema alignment notes and updated status mapping to tool-native values. |
 
 ---
 

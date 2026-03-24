@@ -31,6 +31,11 @@ Where this addendum conflicts with the base skill, this addendum takes precedenc
 
 ## Section A: DAL-Driven Change Control Tier Assignment
 
+**SE Tool Data Model Alignment:** This addendum uses the `interface` entity fields from SK-DM-001. Required fields for managed aviation interfaces include:
+- `provider`, `consumer`, `interfaceType`, `direction`, `protocol/Standard`, `status`
+- `ai-generated`, `aiConfidenceScore`, `humanReviewed`, `owner`
+- DAL and change-control metadata captured as additional governance attributes in this skill.
+
 Replace the generic assurance classification criterion in SK-INTF-002 Section 3 with the following DAL-specific rules for aviation programs. DAL is defined in SK-CERT-001.
 
 **Tier 1 — Safety-Critical Interface Changes (DAL A or B interfaces, or Released Baseline ICDs):**

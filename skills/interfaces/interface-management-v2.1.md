@@ -1,6 +1,6 @@
 Skill Name:        Interface Management
 Skill ID:          SK-INTF-002
-Version:           2.1
+Version:           2.2
 Scope:             General
 Domain:            Interfaces
 Dependencies:      SK-INTF-001, SK-REQ-003
@@ -23,6 +23,13 @@ For interface requirements traceability coordinate with SK-REQ-003. For verifica
 
 **Verification methods recognized:** Test, Inspection, Analysis, Demonstration, Similarity. Definitions in SK-REQ-001.
 
+**AI-enabled SE Tool data-model alignment:** Use `interface` entity field names from SK-DM-001 exactly when producing structured outputs:
+`name`, `description`, `provider`, `consumer`, `interfaceType`, `direction`, `protocol/Standard`, `status`, `ai-generated`, `aiConfidenceScore`, `humanReviewed`, `owner`.
+- Required enum fidelity:
+  - `status`: `Draft | Approved | Depracated` (tool schema spelling)
+  - `ai-generated`: `Yes | No`
+  - `aiConfidenceScore`: numeric, constrained to `<=1`
+
 ---
 
 ## Core Competencies
@@ -36,11 +43,13 @@ The Interface Registry is the single authoritative master list of all interfaces
 | Field | Description |
 |---|---|
 | Interface ID | Unique identifier (consistent with ICD naming convention) |
-| Interface Name | Descriptive name identifying the two items and the interface type |
-| Interface Type | Logical / Electrical / Mechanical / Fluid / Software |
+| name | Descriptive name identifying the two items and the interface type |
+| interfaceType | Logical / Electrical / Mechanical / Fluid / Software |
 | Interface Level | Hierarchy level (0 = System-to-External, 1 = Subsystem-to-Subsystem, 2 = Component, 3 = Item/Unit, 4 = Software) |
-| Providing Item | System, subsystem, or component on the output side |
-| Consuming Item | System, subsystem, or component on the input side |
+| provider | System, subsystem, or component on the output side |
+| consumer | System, subsystem, or component on the input side |
+| direction | Interface direction (program-defined values) |
+| protocol/Standard | Protocol or standard governing the interface |
 | Governing ICD ID | Document ID of the ICD that specifies this interface |
 | ICD Revision | Current approved revision of the governing ICD |
 | ICD Status | Planned / In Development / Under Review / Baselined / Superseded |
@@ -50,7 +59,10 @@ The Interface Registry is the single authoritative master list of all interfaces
 | Supplier Involvement | Internal / Supplier name (flag if crosses an organizational boundary) |
 | Baseline Date | Date on which the current ICD revision was formally baselined |
 | Open Actions | Count of open change requests, conflicts, or risk items |
-| Verification Status | Open / In Work / Verified / Closed / Waived |
+| status | Draft / Approved / Depracated |
+| ai-generated | Yes / No |
+| aiConfidenceScore | Numeric confidence score <=1 |
+| humanReviewed | True / False |
 | Notes | Any maturity flags, waivers, or program risk notes |
 
 **Registry Maintenance Rules:**
@@ -219,6 +231,9 @@ Interface risks are program risks with a specific technical signature. Manage th
 | Anti-Pattern | Violation | Action |
 |---|---|---|
 | Interface in architecture model not in Registry | Unmanaged interface | Create Registry entry before next design review |
+| interface record uses `Deprecated` spelling | Schema mismatch with tool field enum | Use `Depracated` for tool-generated structured outputs |
+| `aiConfidenceScore` greater than 1 | Invalid confidence range | Clamp or reject value and require correction before baseline |
+| `ai-generated = Yes` with `humanReviewed = False` at release gate | AI-generated interface not human approved | Require human review before Released Baseline / Approved usage |
 | ICD baselined without both-side sign-off | Unilateral baseline — not a binding commitment | Require both-side approval before baseline is recorded |
 | Interface change implemented before ICR/ICN approved | Configuration management nonconformance | Revert or document as deviation; initiate formal change process |
 | Supplier ICD overdue with no risk entry | Untracked supplier delivery risk | Create risk register entry and escalate to program management |
@@ -245,7 +260,8 @@ Interface risks are program risks with a specific technical signature. Manage th
 | 1.0 | [Date] | [Author] | Initial release — aviation-scoped |
 | 2.0 | [Date] | [Author] | Generalized to program-agnostic scope. Aviation certification content migrated to SK-INTF-002-AVN. Skill header block added. Consistency fixes applied: DAL terminology replaced with assurance classification, FAA/aviation milestone names replaced with generic Review 1/2/3, eVTOL references removed, cross-references added. |
 | 2.1 | [Date] | [Author] | Aligned interface verification status vocabulary with SK-REQ-003, SK-VV-001, and SK-VER-001 by replacing `Unverified` with `Open` and adding `Waived` as an explicit state. |
+| 2.2 | [Date] | [Author] | Aligned structured interface outputs to SK-DM-001 tool schema: added canonical `interface` field names, required enum/value constraints (`status`, `ai-generated`, `aiConfidenceScore`, `humanReviewed`), and AI-data quality anti-pattern checks. |
 
 ---
 
-*Authority: INCOSE Systems Engineering Handbook v5 | ISO/IEC/IEEE 15288:2023 | Extends: SK-INTF-001 v2.0, SK-REQ-003 v2.1*
+*Authority: INCOSE Systems Engineering Handbook v5 | ISO/IEC/IEEE 15288:2023 | Extends: SK-INTF-001 v2.0, SK-REQ-003 v2.1, SK-DM-001 v1.0*

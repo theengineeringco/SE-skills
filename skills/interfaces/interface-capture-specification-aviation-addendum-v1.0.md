@@ -182,6 +182,7 @@ Add the following to the base skill anti-pattern table:
 | Version | Date | Author | Summary of Changes |
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release — content migrated from SK-INTF-001 v1.0 (aviation scope) and extended with DAL propagation attributes, DO-160G extended wiring table, cybersecurity interface attributes, power quality attributes, and eVTOL-specific HV and vertiport interface content. |
+| 1.1 | [Date] | [Author] | Added explicit mapping to `interface` entity attributes from SK-DM-001, including `protocol/Standard`, `ai-generated`, `aiConfidenceScore`, and `humanReviewed`, and standardized use of `status` enum values (`Draft / Approved / Depracated`) for tool alignment. |
 
 ---
 
