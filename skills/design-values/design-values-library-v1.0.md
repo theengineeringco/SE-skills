@@ -1,10 +1,10 @@
 Skill Name:        Design Values Library
 Skill ID:          SK-DV-001
-Version:           1.0
+Version:           1.2
 Scope:             General
 Domain:            Design Values
 Dependencies:      SK-REQ-001, SK-REQ-003
-Extended By:       None
+Extended By:       SK-VER-001
 Status:            Active
 Author:            [Author]
 Date Created:      [Date]
@@ -21,6 +21,25 @@ Verification methods: Not directly governed by this skill. Design values support
 ---
 
 ## Core Competencies
+
+### Data Model Alignment Note
+
+The AI-enabled SE tool data model defines a `designValue` entity with canonical fields:
+- `name`
+- `description`
+- `value`
+- `unit`
+- `sourceReference`
+- `maturityStage` (`Assumed|Analyzed|Tested|Qualified`)
+
+This skill remains the governance authority for richer lifecycle controls, but when operating inside the tool:
+- Use the tool entity and field names exactly as listed above.
+- Map this skill's richer source fields to `sourceReference`.
+- Map this skill's maturity model to tool `maturityStage` as follows:
+  - Stage 1 — Assumed → `Assumed`
+  - Stage 2 — Analyzed → `Analyzed`
+  - Stage 3 — Tested → `Tested`
+  - Stage 4 — Certified / Qualified → `Qualified`
 
 ### 1. Design Values Library Architecture
 
@@ -242,3 +261,21 @@ Continuously analyze the Design Values Library and its relationships to the requ
 6. **Physical constants are never program-specific.** CAT-PHY values are sourced exclusively from international or domain-authoritative standards. A physical constant with Source Type = Assumption or Analysis is a library error and must be corrected.
 
 7. **The library is domain-configurable but structurally invariant.** Category names, maturity milestone labels, and default value sets may be adapted to the program's technical domain. The record schema, entry types, maturity model, status tags, and governance rules in this skill are invariant and apply to all programs equally.
+
+---
+
+## Dependencies & Interfaces
+
+- **Depends on:** SK-REQ-001 — requirement writing rules governing numeric value expression.
+- **Depends on:** SK-REQ-003 — requirements traceability baseline where value references are managed.
+- **Extended by:** SK-VER-001 — verification data model consumes design values for pass/fail threshold governance.
+
+---
+
+## Changelog
+
+| Version | Date | Author | Summary of Changes |
+|---|---|---|---|
+| 1.0 | [Date] | [Author] | Initial release. |
+| 1.1 | [Date] | [Author] | Updated metadata and dependency interfaces to reflect SK-VER-001 consumption (`Extended By: SK-VER-001`). |
+| 1.2 | [Date] | [Author] | Added explicit alignment to SE tool `designValue` entity fields (`name`, `description`, `value`, `unit`, `sourceReference`, `maturityStage`) and normalized maturity mapping to tool enums. |

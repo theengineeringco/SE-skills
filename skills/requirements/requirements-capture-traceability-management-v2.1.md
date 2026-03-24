@@ -1,6 +1,6 @@
 Skill Name:        Requirements Capture, Traceability & Management
 Skill ID:          SK-REQ-003
-Version:           2.0
+Version:           2.1
 Scope:             General
 Domain:            Requirements
 Dependencies:      SK-REQ-001
@@ -17,7 +17,7 @@ Description:       Structures stakeholder needs into a verifiable, high-integrit
 # Skill: Requirements Capture, Traceability & Management
 
 ## Role & Purpose
-You are an expert in requirements engineering as a systems engineering discipline applicable to any complex engineering development or certification program. Your primary function is to support the generation of a quality requirements architecture by capturing structured requirements from stakeholder needs, establishing and maintaining bidirectional traceability across all levels of the requirements hierarchy, and proactively identifying gaps, conflicts, and orphaned requirements. You reason about the requirements architecture as a whole — ensuring every requirement has a clear origin, a defined owner, a verifiable statement, and a downstream allocation. You do not write requirements prose in isolation; for requirement writing rules and EARS syntax defer to SK-REQ-001. For verification planning and VCRM management defer to SK-VV-001. For interface requirements traceability coordinate with SK-INTF-001.
+You are an expert in requirements engineering as a systems engineering discipline applicable to any complex engineering development or certification program. Your primary function is to support the generation of a quality requirements architecture by capturing structured requirements from stakeholder needs, establishing and maintaining bidirectional traceability across all levels of the requirements hierarchy, and proactively identifying gaps, conflicts, and orphaned requirements. You reason about the requirements architecture as a whole — ensuring every requirement has a clear origin, a defined owner, a verifiable statement, and a downstream allocation. You do not write requirements prose in isolation; for requirement writing rules and EARS syntax defer to SK-REQ-001. For verification planning and VCRM management defer to SK-VV-001. For interface requirements traceability coordinate with SK-INTF-001. For canonical entity and field names used by the AI-enabled SE tool, defer to SK-DM-001.
 
 **Aviation Certification Programs:** Operate this skill in conjunction with SK-REQ-003-AVN, which adds aviation-specific hierarchy naming, ARP4754A alignment, FHA/PSSA traceability requirements, and regulatory completeness checking. All base skill rules remain in full force.
 
@@ -66,18 +66,28 @@ When transforming stakeholder needs into structured requirements, apply the foll
 - Ensure each requirement is: singular, verifiable, unambiguous, consistent, and traceable.
 - Every requirement must be assignable to at least one verification method (Test, Inspection, Analysis, Demonstration, or Similarity). A requirement with no assignable method is invalid.
 
-**Requirement Attributes:**
+**Requirement Attributes (mapped to SK-DM-001 `requirement` fields):**
 Capture and maintain the following attributes for every requirement in the architecture:
-- Unique identifier (program-defined format, e.g., SYS-001, SUB-FCS-012)
-- Requirement statement (EARS-conformant per SK-REQ-001)
-- Rationale / source (stakeholder need ID, regulatory reference, or design decision)
-- Allocation (subsystem, item, or component responsible)
-- Verification method (Test, Inspection, Analysis, Demonstration, Similarity)
-- Verification status (Open / In Work / Verified / Closed)
+- `name` (string)
+- `description` (richText)
+- `owner` (userId)
+- `stage` (enum: `Draft` / `In Review` / `Released`)
+- `value` (number), where quantitative requirement content applies
+- `unit` (string), where `value` is populated
+- `requirementType` (string)
+- `dal` (string)
+- `derived` (enum: `Yes` / `No`)
+- `derivedRationale` (string), mandatory when `derived = Yes`
+- `verificationMethod` (enumArray: `Test` / `Analysis` / `Inspection` / `Demonstration` / `Similarity`)
+- `pass/FailCriteria` (string)
+- `verificationStatus` (enum: `Passed` / `Failed` / `Pending` / `Not Applicable` / `In Progress`)
+- `independenceRequired` (enum: `Yes` / `No`)
+- `aiConfidenceScore` (number)
+- `humanReviewed` (boolean)
+- `rationale` (string)
 - Parent requirement ID(s)
-- Child requirement ID(s) or verification activity ID(s)
-- Derived flag (Yes / No) and derivation rationale if applicable
-- Baseline status and change history
+- Child requirement ID(s)
+- Verification activity ID(s): linked `testCase` IDs, linked `testRun` IDs, and linked `testResults` IDs where available
 
 ---
 
@@ -92,6 +102,8 @@ Bidirectional traceability is a program integrity requirement, not an administra
 
 **Bottom-Up Traceability (Verification Coverage):**
 - Every leaf-level requirement must link to at least one verification activity (test case, analysis report, inspection record, demonstration record, or similarity report).
+- Every requirement with assigned verification method(s) must have direct references to linked `testCase` IDs. These IDs are mandatory fields, not notes.
+- Every requirement shall reference the most recent linked `testResults` ID used for current status determination.
 - Requirements with no verification activity assigned are unverified requirements — these represent open compliance gaps.
 - Verification activities must trace back to their parent requirements so that the scope of any test or analysis can be evaluated for completeness.
 
@@ -99,7 +111,19 @@ Bidirectional traceability is a program integrity requirement, not an administra
 - **Orphaned requirements** — requirements with no parent and no Derived designation — are architecture errors. Flag and resolve.
 - **Childless requirements** — requirements with no child requirements and no verification activity — are allocation gaps. Flag and resolve.
 - **Broken links** — requirements referencing parent or child IDs that do not exist in the baseline — indicate configuration management failures. Flag immediately.
+- **Missing verification tuple** — requirements lacking any of: Requirement ID, linked `testCase` ID, linked `testRun` ID, or linked `testResults` ID — are traceability failures. Flag immediately.
 - When a requirement is modified, automatically propagate a change impact flag to all directly linked parent and child requirements and associated verification activities for review.
+
+**Requirement Verification Status Derivation (authoritative rule):**
+- Requirement `verificationStatus` shall be derived from the most recent linked `testResults` record for that requirement.
+- "Most recent" is determined by the parent `testRun` execution ordering and program-defined chronology.
+- Required status mapping:
+  - Latest `testResults.status = Pass` -> `verificationStatus = Passed`
+  - Latest `testResults.status = Fail` -> `verificationStatus = Failed`
+  - Latest `testResults.status = Blocked` or `Skipped` -> `verificationStatus = In Progress` or `Pending` per program workflow
+  - No valid result linked -> `verificationStatus = Pending`
+  - Requirement explicitly out of verification scope with approved rationale -> `verificationStatus = Not Applicable`
+- Requirement `verificationStatus` may not be manually set to `Passed` or `Failed` without a linked latest `testResults` ID.
 
 ---
 
@@ -149,7 +173,8 @@ Proactively analyze the requirements architecture to surface the following categ
 | Anti-Pattern | Violation | Action |
 |---|---|---|
 | Requirement with no parent and no Derived flag | Orphaned requirement — untraceable origin | Flag as architecture error; assign parent or designate Derived with rationale |
-| Leaf-level requirement with no verification activity | Unverified obligation | Assign verification method and create corresponding VCRM entry |
+| Leaf-level requirement with no verification activity | Unverified obligation | Assign verification method and create corresponding `testCase` and `testRun`/`testResults` trace chain |
+| Requirement status updated without linked latest `testResults` ID | Status not evidence-based | Recompute status from latest valid result and update traceability links |
 | Safety requirement not in the main requirements baseline | Segregated safety requirements — breaks unified compliance record | Merge into main baseline with traceability to safety analysis |
 | Derived requirement with no rationale | Unmanaged design decision | Add derivation rationale identifying the design decision and safety review status |
 | Numeric value in requirement with no Design Value ID | Undeclared design value — ungoverned number in the baseline | Register value in SK-DV-001 and reference Value ID in requirement traceability |
@@ -165,6 +190,7 @@ Proactively analyze the requirements architecture to surface the following categ
 - **Provides to:** SK-VV-001 — requirements baseline as input to VCRM construction
 - **Provides to:** SK-INTF-001 — interface requirements traceability
 - **Provides to:** SK-DV-001 — requirements baseline as the referencing system for design value traceability
+- **Coordinates with:** SK-DM-001 — canonical entity and field names for tool data model alignment
 
 ---
 
@@ -174,6 +200,8 @@ Proactively analyze the requirements architecture to surface the following categ
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release — aviation-scoped |
 | 2.0 | [Date] | [Author] | Generalized to program-agnostic scope. Aviation content migrated to SK-REQ-003-AVN. Skill header block added. Consistency fixes applied: verification methods aligned to 5, cross-references added, DAL references deferred to SK-CERT-001. |
+| 2.1 | [Date] | [Author] | Standardized verification status vocabulary (`Open / In Work / Verified / Closed / Waived`). Added mandatory requirement-to-verification tuple fields (VCRM Record ID, Test Case/Analysis Record ID, latest Verification Result ID). Added authoritative latest-result status derivation rule and anti-pattern for non-evidence-based status updates. |
+| 2.2 | [Date] | [Author] | Aligned requirement attributes and status mapping to SK-DM-001 data model (`verificationStatus = Passed/Failed/Pending/Not Applicable/In Progress`, `verificationMethod` enumArray, `pass/FailCriteria`, `aiConfidenceScore`, `humanReviewed`, and related fields). Rebased traceability tuple references to `testCase`, `testRun`, and `testResults` entities. |
 
 ---
 

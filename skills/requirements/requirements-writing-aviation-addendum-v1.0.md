@@ -24,6 +24,7 @@ Description:       Extends the base Requirements Writing skill for FAA certifica
 This addendum extends the base Requirements Writing Skill for use in aviation certification programs. All base skill rules (R1–R11), EARS patterns, quality characteristics (Q1–Q9), and anti-patterns remain in full force. This addendum adds aviation-specific requirement types, writing patterns, DAL-aware authoring rules, expanded verification methods, and aerospace anti-patterns that the base skill does not address. Where this addendum conflicts with the base skill, this addendum takes precedence for aviation certification work.
 
 Scope boundary: This addendum covers requirements written for FAA-certificated aircraft programs. It does not replace SK-REQ-001 — all base rules remain in force. For requirements capture, traceability, and management see SK-REQ-003. For verification method assignment at the program level see SK-VV-001.
+Data model alignment: when used with the SE tool data model skill, store method assignment in `verificationMethod` (enumArray: `Test|Analysis|Inspection|Demonstration|Similarity`) and status in `verificationStatus` (enum: `Passed|Failed|Pending|Not Applicable|In Progress`) on the `requirement` entity.
 DAL: Development Assurance Level assigned per ARP4754A. Authoritative definition in SK-CERT-001. This skill applies DAL to requirement writing and verification method selection.
 Verification methods recognized by this skill: Test, Inspection, Analysis, Demonstration, Similarity (per ARP4754A Table 7 and SK-REQ-001 base definitions).
 

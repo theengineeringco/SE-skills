@@ -162,4 +162,4 @@ Add the following to the base skill anti-pattern table:
 
 ---
 
-*Authority: SAE ARP4754A (2010) | SAE ARP4761 (1996) | FAA AC 25.1309-1B | FAA AC 23.1309-1E | Extends: SK-REQ-003 v2.0*
+*Authority: SAE ARP4754A (2010) | SAE ARP4761 (1996) | FAA AC 25.1309-1B | FAA AC 23.1309-1E | Extends: SK-REQ-003 v2.1*

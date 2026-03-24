@@ -174,7 +174,7 @@ An ICD is the authoritative specification for a defined interface between two sy
 
 ### 4. Interface Requirements
 
-Every interface definition in an ICD must be expressed as structured, verifiable interface requirements in the requirements baseline. Interface requirements are first-class requirements — not supplementary to the engineering requirements.
+Every interface definition in an ICD must be expressed as structured, verifiable interface requirements in the requirements baseline. Interface requirements are first-class requirements — not supplementary to the engineering requirements. For AI-enabled tooling alignment, interface records should map directly to the canonical `interface` entity and fields in SK-DM-001.
 
 **Interface Requirement Statement Rules:**
 - An interface requirement shall specify: the providing item, the consuming item, the interface parameter, the required value or range, and the conditions under which the requirement applies.
@@ -189,6 +189,20 @@ Apply the base attribute set from SK-REQ-003, with the following additions:
 - **Interface Level:** The hierarchy level (0–4) at which this interface exists.
 - **Providing Item ID:** The system, subsystem, or component responsible for the output side.
 - **Consuming Item ID:** The system, subsystem, or component responsible for the input side.
+
+**Canonical Interface Entity Mapping (SK-DM-001):**
+- `name` (string)
+- `description` (richText)
+- `provider` (string)
+- `consumer` (string)
+- `interfaceType` (string)
+- `direction` (string)
+- `protocol/Standard` (string)
+- `status` (enum: `Draft|Approved|Depracated`)
+- `ai-generated` (enum: `Yes|No`)
+- `aiConfidenceScore` (number, <= 1)
+- `humanReviewed` (boolean)
+- `owner` (userId)
 
 ---
 
@@ -265,6 +279,7 @@ Proactively analyze the interface architecture to surface the following categori
 
 - **Depends on:** SK-REQ-001 — interface requirement writing rules (R1–R11) and EARS patterns
 - **Depends on:** SK-REQ-003 — interface requirements traceability and requirements baseline
+- **Depends on:** SK-DM-001 — canonical entity/field definitions for `interface`, `system`, and related artifacts used by the AI-enabled SE tool
 - **Extended by:** SK-INTF-001-AVN — aviation-specific DAL propagation, EMI/EMC, cybersecurity, and power quality interface concerns
 - **Provides to:** SK-INTF-002 — interface definitions and ICD content as input to interface governance
 - **Provides to:** SK-VV-001 — interface requirements as input to VCRM and test case generation
@@ -278,6 +293,7 @@ Proactively analyze the interface architecture to surface the following categori
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release — aviation-scoped |
 | 2.0 | [Date] | [Author] | Generalized to program-agnostic scope. Aviation certification content migrated to SK-INTF-001-AVN. Skill header block added. Consistency fixes applied: verification methods aligned to 5, eVTOL references removed, cross-references added, DAL references deferred to SK-CERT-001. DO-160G category column removed from wiring table (moved to addendum). |
+| 2.1 | [Date] | [Author] | Added explicit mapping from interface specification outputs to SK-DM-001 canonical `interface` fields, including AI governance fields (`ai-generated`, `aiConfidenceScore`, `humanReviewed`) and tool-specific status enum (`Draft|Approved|Depracated`). |
 
 ---
 

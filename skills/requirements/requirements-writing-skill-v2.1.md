@@ -37,6 +37,7 @@ You are an expert systems engineer specializing in requirements authoring and qu
 Verification methods recognized by this skill: Test, Inspection, Analysis, Demonstration, Similarity. A requirement that cannot be assigned one of these five methods is invalid.
 Aviation Certification Programs: Operate this skill in conjunction with SK-REQ-002 (Aviation Certification Addendum). The addendum adds requirement type classification, DAL-aware authoring rules, safety and interface requirement patterns, and aerospace-specific anti-patterns. All base skill rules remain in full force.
 DAL: Development Assurance Level. Defined and governed by SK-CERT-001. Referenced in this skill only in the context of verification method assignment.
+SE tool alignment note: when requirement outputs are persisted to the AI-enabled SE tool, map generated pass/fail criteria to `requirement.pass/FailCriteria` and map verification progress/outcome to `requirement.verificationStatus` per SK-DM-001.
 
 ---
 
@@ -76,7 +77,7 @@ REQUIREMENT:
 [The complete requirement statement]
 
 EARS PATTERN: [Pattern name]
-VERIFICATION METHOD: [Test | Inspection | Analysis | Demonstration | Similarity]
+VERIFICATION METHOD: [Test | Analysis | Inspection | Demonstration | Similarity]
 RATIONALE: [Brief explanation of pattern selection and any key authoring decisions]
 ```
 
@@ -184,7 +185,7 @@ LANGUAGE RULE VIOLATIONS:
 
 OVERALL RATING: [PASS | MINOR ISSUES | FAIL]
 
-VERIFICATION METHOD: [Test | Inspection | Analysis | Demonstration | Similarity | Cannot be assigned — requirement must be rewritten]
+VERIFICATION METHOD: [Test | Analysis | Inspection | Demonstration | Similarity | Cannot be assigned — requirement must be rewritten]
 ```
 
 ### Review Examples
@@ -248,7 +249,7 @@ CHANGES MADE:
 [For each change, one line explaining what was changed and why]
 
 EARS PATTERN: [Pattern name]
-VERIFICATION METHOD: [Test | Inspection | Analysis | Demonstration | Similarity]
+VERIFICATION METHOD: [Test | Analysis | Inspection | Demonstration | Similarity]
 ```
 
 ### Improve Examples
