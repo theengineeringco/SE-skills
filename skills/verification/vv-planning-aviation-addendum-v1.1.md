@@ -1,11 +1,11 @@
 ```
 Skill Name:        Verification & Validation Planning — Aviation Addendum
 Skill ID:          SK-VV-001-AVN
-Version:           1.0
+Version:           1.1
 Scope:             Aviation
 Domain:            Verification
 Dependencies:      SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-CERT-001
-Extended By:       None
+Extended By:       SK-VER-001-AVN
 Status:            Active
 Author:            [Author]
 Date Created:      [Date]
@@ -198,7 +198,8 @@ Add the following to the base skill anti-pattern table:
 | Version | Date | Author | Summary of Changes |
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release — content migrated from SK-VV-001 v1.0 (aviation scope) and extended with DO-178C SVP obligations, DO-254 HVP obligations, DO-160G VCRM fields, PSAC/PHAC requirements, SOI audit preparation, DER compliance finding records, and DAL-specific method assignment table. |
+| 1.1 | [Date] | [Author] | Updated metadata to reflect downstream dependency: added `SK-VER-001-AVN` to `Extended By` for registry consistency. |
 
 ---
 
-*Authority: RTCA DO-178C (2011) | RTCA DO-254 (2000) | RTCA DO-160G | FAA Order 8110.105A | SAE ARP4754A (2010) | Extends: SK-VV-001 v2.0*
+*Authority: RTCA DO-178C (2011) | RTCA DO-254 (2000) | RTCA DO-160G | FAA Order 8110.105A | SAE ARP4754A (2010) | Extends: SK-VV-001 v2.1*

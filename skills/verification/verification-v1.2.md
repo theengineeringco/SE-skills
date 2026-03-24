@@ -1,6 +1,6 @@
 Skill Name:        Verification
 Skill ID:          SK-VER-001
-Version:           1.1
+Version:           1.2
 Scope:             General
 Domain:            Verification
 Dependencies:      SK-REQ-003, SK-VV-001, SK-DV-001
@@ -93,6 +93,8 @@ A Test Case is a detailed, executable description of a single verification activ
 | `steps` | Ordered List | Structured objects: `{ step_number, action, expected_observation }` |
 | `expected_result` | Text | Qualitative description of a passing outcome |
 | `pass_fail_criteria` | Text | Explicit, measurable criteria for pass/fail determination — distinct from `expected_result` |
+| `requirement_ids` | List | Requirement IDs directly verified by this test case — required, non-empty |
+| `vcrm_record_ids` | List | VCRM record IDs directly referenced by this test case — required, non-empty |
 | `postconditions` | Text | Cleanup or state assertions after execution |
 | `design_value_ids` | List | Value IDs from SK-DV-001 that govern the pass/fail thresholds for this test case |
 | `automation_status` | Enum | `Manual` / `Automated` / `Planned` |
@@ -116,6 +118,7 @@ A Test Case is a detailed, executable description of a single verification activ
 - `steps` stored as structured objects (`{ step_number, action, expected_observation }`) enables step-level result capture in Verification Results and supports root cause analysis when a test case fails.
 - `version` is mandatory — Verification Results must record which version of the test case was executed. As procedures evolve, historical results remain valid against the version that was in effect at execution time.
 - A Test Case with `status = Ready` and no parent Verification Plan is an unplanned verification activity — flag it.
+- A Test Case may not be baselined unless both `requirement_ids` and `vcrm_record_ids` are populated and consistent with `covers` edges.
 
 ---
 
@@ -156,7 +159,7 @@ A Test Run is an execution instance of a Verification Plan at a specific point i
 #### Recommendations
 - `build_version` and `environment` must be first-class fields — not notes — so results can be filtered and trended across builds and environments over time.
 - The summary counts (`passed`, `failed`, etc.) can be derived by traversing to Verification Result nodes but caching them on the Test Run improves dashboard query performance.
-- A Test Run may not be set to `Completed` if any child Verification Result has `status = Fail` with no `anomaly_ids` — enforce this as a workflow gate.
+- A Test Run may not be set to `Completed` if any child Verification Result has `execution_status = Fail` with no `anomaly_ids` — enforce this as a workflow gate.
 - `equipment_calibration_verified` is a hard gate, not an advisory field — see Governance Principles.
 
 ---
@@ -175,8 +178,9 @@ A Verification Result captures the outcome of executing a single Test Case withi
 | `test_case_id` | Reference | Test Case being executed |
 | `test_case_version` | String | Version of the test case at time of execution — mandatory, captured at result creation |
 | `execution_status` | Enum | `Pass` / `Fail` / `Blocked` / `Skipped` — outcome of this execution instance |
-| `vcrm_status` | Enum | `Open` / `In Work` / `Complete` / `Closed` / `Waived` — closure state in the SK-VV-001 VCRM |
+| `vcrm_status` | Enum | `Open` / `In Work` / `Verified` / `Closed` / `Waived` — closure state in the SK-VV-001 VCRM |
 | `vcrm_record_id` | Reference | Direct reference to the VCRM record this result closes |
+| `requirement_ids` | List | Requirement IDs supported by this result; must be a subset of linked test case requirements |
 | `verdict_notes` | Text | Explanation of the outcome, especially for non-pass results |
 | `evidence_links` | List | Typed links: `{ url, type: "log" \| "screenshot" \| "data_file" \| "report" }` |
 | `executed_by` | Reference | User or system that ran this case |
@@ -186,6 +190,7 @@ A Verification Result captures the outcome of executing a single Test Case withi
 | `duration_ms` | Integer | Execution duration in milliseconds |
 | `step_results` | List | Per-step outcome: `{ step_number, status, actual_observation }` |
 | `anomaly_ids` | List | References to anomaly or defect records filed from this result — required when `execution_status = Fail` |
+| `superseded_by_result_id` | Reference | Optional link to a newer result that supersedes this one for status roll-up |
 | `notes` | Text | Additional free-form observations |
 
 #### Graph Edges
@@ -193,7 +198,7 @@ A Verification Result captures the outcome of executing a single Test Case withi
 - `references` → Test Case
 - `closes` → VCRM Record
 - `found` → Defect / Anomaly (optional, if defects are modeled as first-class nodes)
-- `supports` → Requirement (derived via Test Case, or direct for traceability)
+- `supports` → Requirement (one or many; direct link required for deterministic requirement-level rollups)
 
 #### Recommendations
 - `execution_status` and `vcrm_status` serve different purposes and must both be captured. A result can be `Pass` (execution) but still `In Work` (VCRM) if the independent review has not yet been completed.
@@ -201,6 +206,7 @@ A Verification Result captures the outcome of executing a single Test Case withi
 - `evidence_links` typed as structured objects allows logs, screenshots, and reports to be filtered and rendered differently in review workflows.
 - `step_results` enables root cause analysis at the procedure level when a test case fails partway through execution.
 - A result with `execution_status = Fail` and no `anomaly_ids` is an incomplete evidence record — enforce as a required field when status is Fail.
+- `requirement_ids` on a result must be non-empty and a subset of the linked test case `requirement_ids`.
 
 ---
 
@@ -211,14 +217,17 @@ Continuously analyze the verification artifact graph to surface the following is
 #### 5.1 Coverage Gap Detection
 - Flag any Requirement node with no incoming `covers` edge from any Test Case — uncovered requirement.
 - Flag any Test Case with `status = Ready` and no parent Verification Plan — unplanned verification activity.
+- Flag any Test Case with empty `requirement_ids` or empty `vcrm_record_ids` — incomplete traceability tuple.
 - Flag any Verification Plan with no associated Test Run — plan defined but never executed.
 - Flag any Verification Plan with `review_status ≠ Approved` that has an associated Test Run with `status ≠ Not Started` — execution begun on an unapproved plan.
 
 #### 5.2 Result Integrity Checks
-- Flag any Test Run with `status = Completed` that has child Verification Results with `execution_status = Blocked` or `Not Started` — incomplete run closed prematurely.
+- Flag any Test Run with `status = Completed` that has child Verification Results with `execution_status = Blocked` — incomplete run closed prematurely.
 - Flag any Verification Result with `execution_status = Fail` and no `anomaly_ids` — failed result with no anomaly record.
 - Flag any Verification Result where `test_case_version` does not match the version of the linked Test Case at the time the parent Test Run was created — potential version mismatch in evidence.
 - Flag any Verification Result with `independence_required = true` and no `reviewed_by` entry and `vcrm_status = Closed` — closure without required independent review.
+- Flag any Verification Result with empty `requirement_ids`, missing `vcrm_record_id`, missing `test_case_id`, or missing `test_run_id` — broken evidence chain.
+- Flag any Verification Result whose `requirement_ids` are not a subset of linked test case `requirement_ids` — inconsistent traceability.
 
 #### 5.3 Equipment & Calibration
 - Flag any Test Run where any Equipment node in `equipment_required` has `calibration_expiry` before `started_at` — run conducted with expired equipment.
@@ -230,7 +239,13 @@ Continuously analyze the verification artifact graph to surface the following is
 
 #### 5.5 Change Impact
 - When a Requirement is modified, flag all Test Cases with a `covers` edge to that Requirement for re-review.
-- When a Test Case is modified and its `version` incremented, flag all open Verification Results referencing a prior version that have `vcrm_status = Closed` — previously closed results may need re-evaluation.
+- When a Test Case is modified and its `version` incremented, flag all Verification Results referencing a prior version that have `vcrm_status = Closed` — previously closed results may need re-evaluation.
+
+#### 5.6 Latest-Result Rollup Integrity
+- For each requirement, compute status from the latest non-superseded Verification Result (`superseded_by_result_id` is null) ordered by `executed_at` and then review completion timestamp where required.
+- Flag any requirement-level status that does not match the computed status from latest linked result.
+- Flag any VCRM row whose `Latest Verification Result ID` does not match computed latest non-superseded result.
+- Flag any result marked superseded while still referenced as latest on any VCRM row.
 
 ---
 
@@ -250,6 +265,8 @@ Continuously analyze the verification artifact graph to surface the following is
 
 7. **Verification Plans must be approved before execution begins.** A Verification Plan must have `review_status = Approved` before any associated Test Run may be set to `In Progress`.
 
+8. **Requirement verification status is latest-result derived.** Requirement-level `Verification Status` and VCRM "latest" pointers must be computed from the latest non-superseded linked result, not manually authored.
+
 ---
 
 ## Anti-Patterns
@@ -257,7 +274,9 @@ Continuously analyze the verification artifact graph to surface the following is
 | Anti-Pattern | Violation | Action |
 |---|---|---|
 | Test Case with no `covers` edge to any Requirement | Untraced verification — no compliance value | Link to at least one Requirement or deprecate the test case |
+| Test Case with empty `requirement_ids` or empty `vcrm_record_ids` | Missing direct traceability tuple | Populate required IDs before baselining or execution |
 | Verification Result with `execution_status = Fail` and no `anomaly_ids` | Failed result undocumented — compliance gap | Require anomaly record before parent Test Run can be closed |
+| Verification Result missing any of `test_run_id`, `test_case_id`, `vcrm_record_id`, or `requirement_ids` | Evidence chain is broken | Reject result record until all mandatory links are populated |
 | Test Run set to `Completed` with unresolved `Blocked` results | Incomplete run marked complete | Resolve or formally disposition all Blocked results before closing |
 | `pass_fail_criteria` with numeric values and no `design_value_ids` | Ungoverned pass/fail threshold | Register value in SK-DV-001 and link via `design_value_ids` |
 | `test_case_version` absent on Verification Result | Evidence not tied to a specific procedure version | Populate at result creation — mandatory field, should be auto-set |
@@ -265,6 +284,7 @@ Continuously analyze the verification artifact graph to surface the following is
 | Verification Plan with `review_status ≠ Approved` with active Test Run | Execution on unapproved plan | Enforce approval gate before `In Progress` is permitted |
 | Test Case with `status = Ready` and no parent Verification Plan | Unplanned test case | Assign to a Verification Plan before execution |
 | Verification Result with `independence_required = true`, no `reviewed_by`, and `vcrm_status = Closed` | Closed without required independent review | Re-open and obtain independent review before re-closing |
+| Requirement status differs from latest non-superseded linked result | Non-deterministic requirement closure | Recompute status from latest result and correct VCRM latest pointers |
 
 ---
 
@@ -284,8 +304,9 @@ Continuously analyze the verification artifact graph to surface the following is
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release |
 | 1.1 | [Date] | [Author] | Added Skill Header Block. Clarified role boundary with SK-VV-001. Aligned field names: `verification_method` (was `approach`), added `Similarity` to method enum, split `status` into `execution_status` + `vcrm_status`, renamed `defect_ids` to `anomaly_ids`. Added `vcrm_ref`, `vcrm_record_id`, `governing_plan_ref`, `independence_required`, `reviewed_by`, `review_status`, `equipment_calibration_verified` fields. Added `design_value_ids` field and `governed_by` graph edge on Test Case. Added `closes` graph edge on Verification Result. Added Proactive Quality Checks section (§5). Added Governance Principles section (§6). Added Anti-Patterns section. Added Dependencies & Interfaces section. |
+| 1.2 | [Date] | [Author] | Standardized status vocabulary to `Open / In Work / Verified / Closed / Waived`. Added mandatory direct traceability fields (`requirement_ids`, `vcrm_record_ids`) on Test Case and required requirement linkage on Verification Result. Added supersession support for deterministic latest-result rollup and new rollup integrity checks. Corrected contradictory quality-check logic and expanded anti-pattern coverage for broken evidence chains and non-deterministic status updates. |
 
 ---
 
 *Authority: INCOSE Systems Engineering Handbook v5 | ISO/IEC/IEEE 15288:2023 | ISO/IEC/IEEE 29148:2018*
-*Aligned with: SK-VV-001 v2.0 | SK-REQ-003 v2.0 | SK-DV-001 v1.0*
+*Aligned with: SK-VV-001 v2.1 | SK-REQ-003 v2.1 | SK-DV-001 v1.0*

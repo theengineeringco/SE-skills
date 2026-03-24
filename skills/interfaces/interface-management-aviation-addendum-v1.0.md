@@ -172,4 +172,4 @@ Add the following to the base skill anti-pattern table:
 
 ---
 
-*Authority: SAE ARP4754A (2010) | 14 CFR § 21.17(b) | FAA AC 21.17-2 | Extends: SK-INTF-002 v2.0*
+*Authority: SAE ARP4754A (2010) | 14 CFR § 21.17(b) | FAA AC 21.17-2 | Extends: SK-INTF-002 v2.1*

@@ -1,6 +1,6 @@
 Skill Name:        Interface Management
 Skill ID:          SK-INTF-002
-Version:           2.0
+Version:           2.1
 Scope:             General
 Domain:            Interfaces
 Dependencies:      SK-INTF-001, SK-REQ-003
@@ -50,7 +50,7 @@ The Interface Registry is the single authoritative master list of all interfaces
 | Supplier Involvement | Internal / Supplier name (flag if crosses an organizational boundary) |
 | Baseline Date | Date on which the current ICD revision was formally baselined |
 | Open Actions | Count of open change requests, conflicts, or risk items |
-| Verification Status | Unverified / In Work / Verified / Closed |
+| Verification Status | Open / In Work / Verified / Closed / Waived |
 | Notes | Any maturity flags, waivers, or program risk notes |
 
 **Registry Maintenance Rules:**
@@ -244,7 +244,8 @@ Interface risks are program risks with a specific technical signature. Manage th
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release — aviation-scoped |
 | 2.0 | [Date] | [Author] | Generalized to program-agnostic scope. Aviation certification content migrated to SK-INTF-002-AVN. Skill header block added. Consistency fixes applied: DAL terminology replaced with assurance classification, FAA/aviation milestone names replaced with generic Review 1/2/3, eVTOL references removed, cross-references added. |
+| 2.1 | [Date] | [Author] | Aligned interface verification status vocabulary with SK-REQ-003, SK-VV-001, and SK-VER-001 by replacing `Unverified` with `Open` and adding `Waived` as an explicit state. |
 
 ---
 
-*Authority: INCOSE Systems Engineering Handbook v5 | ISO/IEC/IEEE 15288:2023 | Extends: SK-INTF-001 v2.0, SK-REQ-003 v2.0*
+*Authority: INCOSE Systems Engineering Handbook v5 | ISO/IEC/IEEE 15288:2023 | Extends: SK-INTF-001 v2.0, SK-REQ-003 v2.1*

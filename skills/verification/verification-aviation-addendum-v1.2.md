@@ -1,6 +1,6 @@
 Skill Name:        Verification — Aviation Addendum
 Skill ID:          SK-VER-001-AVN
-Version:           1.1
+Version:           1.2
 Scope:             Aviation
 Domain:            Verification
 Dependencies:      SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-VV-001-AVN, SK-VER-001, SK-CERT-001
@@ -106,7 +106,7 @@ Where this addendum conflicts with the base skill, this addendum takes precedenc
 | `retention_class` | Enum | Document retention classification per the applicant's DDP / PSAC |
 
 ### Recommendations
-- `anomaly_report_ref` must be treated as a **required field** when `execution_status = Fail` in aviation programs. Every failure must be formally dispositioned via a Problem Report before the verification activity can be closed. Enforce this as a workflow gate: `vcrm_status` may not advance to `Complete` or `Closed` while `execution_status = Fail` and `anomaly_report_ref` is empty.
+- `anomaly_report_ref` must be treated as a **required field** when `execution_status = Fail` in aviation programs. Every failure must be formally dispositioned via a Problem Report before the verification activity can be closed. Enforce this as a workflow gate: `vcrm_status` may not advance to `Verified` or `Closed` while `execution_status = Fail` and `anomaly_report_ref` is empty.
 - `objective_satisfied` is the cleanest signal for compliance matrix generation — it confirms not just that a test passed, but that the relevant standard objective was met. This distinction matters at SOI audits where the FAA evaluates objective satisfaction, not just test pass rates.
 - Results at **DAL A** require a second signature in `reviewed_by` (from the base skill) before `vcrm_status` may be set to `Closed`. Enforce this as a workflow gate. (Authority: SK-VV-001-AVN Section A.)
 - `review_status` and `vcrm_status` serve different purposes: `review_status` tracks the independent reviewer's disposition of the result; `vcrm_status` tracks the compliance closure state. A result can be `review_status = Approved` but still `vcrm_status = In Work` if the anomaly disposition is pending.
@@ -174,8 +174,9 @@ Add the following to the base skill anti-pattern table for aviation programs:
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release |
 | 1.1 | [Date] | [Author] | Added Skill Header Block. Added explicit process authority statement deferring to SK-VV-001-AVN. Added `verification_method_basis`, `robustness_test`, `structural_coverage_target`, `independence_required`, `traceability_ref` to Test Case. Added `lab_accreditation`, `witness`, `test_report_ref`, `configuration_index`, `deviation_notices` to Test Run. Added `review_status`, `reviewed_at`, `anomaly_report_ref`, `objective_satisfied`, `retention_class` to Verification Result. Added `dal`, `verification_objective_ref`, `independence_required`, `independent_reviewer`, `soi_stage`, `certification_basis_ref`, `moc_ref`, `psac_ref`, `phac_ref` to Verification Plan. Added Section E (additional aviation nodes). Added DAL-driven rule summary table. Added aviation anti-patterns. Added Dependencies & Interfaces section. Cross-references to SK-VV-001-AVN, SK-INTF-002-AVN, SK-CERT-001 added throughout. |
+| 1.2 | [Date] | [Author] | Aligned aviation addendum closure-state wording with base-skill canonical status vocabulary by replacing `Complete` transitions with `Verified` transitions where applicable. |
 
 ---
 
 *Authority: RTCA DO-178C (2011) | RTCA DO-254 (2000) | RTCA DO-160G | SAE ARP4754A (2010) | FAA Order 8110.105A*
-*Extends: SK-VER-001 v1.1 | Aligned with: SK-VV-001-AVN v1.0*
+*Extends: SK-VER-001 v1.2 | Aligned with: SK-VV-001-AVN v1.1*

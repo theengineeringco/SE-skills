@@ -1,6 +1,6 @@
 # Skill Library — Gap Analysis
 **Repository:** AI-Enabled Systems Engineering Skill Library
-**Based on:** SK-REQ-001 through SK-DV-001 (9 skills, current library)
+**Based on:** SK-REQ-001 through SK-DV-001 (current library)
 **Version:** 1.0
 
 ---
@@ -114,11 +114,9 @@ The current library covers the following systems engineering disciplines:
 
 ### GAP-009 — General Requirements Field Specification
 **Priority:** Low
-**Trigger:** SK-REQ-004 (Requirements Field Specification) is scoped to aviation certification programs. A general-purpose version applicable to non-aviation programs would extend the utility of SK-REQ-001 and SK-DV-001 as general-purpose skills.
-**Proposed Skill:** Requirements Field Specification (General)
-**Suggested Content:** Core field set applicable to any engineering program, with phase-gated mandatory/optional rules expressed in terms of generic program milestones rather than PDR/CDR/TRR.
-**Dependencies if created:** SK-REQ-001, SK-REQ-003
-**Scope:** General
+**Trigger:** Previously open because SK-REQ-004 did not exist in the repository.
+**Status Update:** Closed. SK-REQ-004 now exists as a general-purpose requirements field specification skill.
+**Follow-on Recommendation:** Future iteration may add an aviation addendum if domain-specific fields need separation.
 
 ---
 
@@ -128,7 +126,7 @@ The current library covers the following systems engineering disciplines:
 |---|---|---|---|
 | SysML interface modeling content | SK-INTF-001 contains SysML patterns that belong in a future MBSE skill | Acceptable until GAP-001 is addressed | When MBSE skill is created, migrate SysML content from SK-INTF-001 and replace with a reference |
 | Safety requirement patterns | SK-CERT-001 describes safety standards; SK-REQ-002 defines safety requirement patterns | Intentional division — SK-CERT-001 is knowledge, SK-REQ-002 is authoring | No action required; document the division in both skills |
-| DAL assignment logic | Appears in SK-CERT-001, SK-REQ-002, SK-REQ-004, SK-VV-001 | Acceptable repetition — each skill applies DAL in its own context | Ensure terminology is consistent across all four skills on next review |
+| DAL assignment logic | Appears in SK-CERT-001, SK-REQ-002, SK-REQ-003-AVN, SK-VV-001-AVN | Acceptable repetition — each skill applies DAL in its own context | Ensure terminology is consistent across all four skills on next review |
 | Verification method definitions | Defined in SK-REQ-001 (base), SK-REQ-002 (extended), SK-VV-001 (detailed) | Intentional layering | Confirm SK-VV-001 does not contradict SK-REQ-001 definitions on next review |
 
 ---
@@ -140,5 +138,5 @@ The current library covers the following systems engineering disciplines:
 | High | GAP-001, GAP-002 | 2 |
 | Medium | GAP-003, GAP-004, GAP-005, GAP-006, GAP-007 | 5 |
 | Low–Medium | GAP-008 | 1 |
-| Low | GAP-009 | 1 |
+| Low | — | 0 |
 | **Total** | | **9** |

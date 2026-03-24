@@ -1,6 +1,6 @@
 Skill Name:        Requirements Capture, Traceability & Management
 Skill ID:          SK-REQ-003
-Version:           2.0
+Version:           2.1
 Scope:             General
 Domain:            Requirements
 Dependencies:      SK-REQ-001
@@ -73,9 +73,10 @@ Capture and maintain the following attributes for every requirement in the archi
 - Rationale / source (stakeholder need ID, regulatory reference, or design decision)
 - Allocation (subsystem, item, or component responsible)
 - Verification method (Test, Inspection, Analysis, Demonstration, Similarity)
-- Verification status (Open / In Work / Verified / Closed)
+- Verification status (Open / In Work / Verified / Closed / Waived)
 - Parent requirement ID(s)
-- Child requirement ID(s) or verification activity ID(s)
+- Child requirement ID(s)
+- Verification activity ID(s): VCRM Record ID(s), Test Case ID(s), and most recent Verification Result ID(s) where available
 - Derived flag (Yes / No) and derivation rationale if applicable
 - Baseline status and change history
 
@@ -92,6 +93,8 @@ Bidirectional traceability is a program integrity requirement, not an administra
 
 **Bottom-Up Traceability (Verification Coverage):**
 - Every leaf-level requirement must link to at least one verification activity (test case, analysis report, inspection record, demonstration record, or similarity report).
+- Every requirement with assigned verification method(s) must have direct references to VCRM Record ID(s) and Test Case / Analysis Record ID(s). These IDs are mandatory fields, not notes.
+- Every requirement shall reference the most recent Verification Result ID used for current status determination.
 - Requirements with no verification activity assigned are unverified requirements — these represent open compliance gaps.
 - Verification activities must trace back to their parent requirements so that the scope of any test or analysis can be evaluated for completeness.
 
@@ -99,7 +102,19 @@ Bidirectional traceability is a program integrity requirement, not an administra
 - **Orphaned requirements** — requirements with no parent and no Derived designation — are architecture errors. Flag and resolve.
 - **Childless requirements** — requirements with no child requirements and no verification activity — are allocation gaps. Flag and resolve.
 - **Broken links** — requirements referencing parent or child IDs that do not exist in the baseline — indicate configuration management failures. Flag immediately.
+- **Missing verification tuple** — requirements lacking any of: Requirement ID, VCRM Record ID, Test Case/Analysis Record ID, or Verification Result ID — are traceability failures. Flag immediately.
 - When a requirement is modified, automatically propagate a change impact flag to all directly linked parent and child requirements and associated verification activities for review.
+
+**Requirement Verification Status Derivation (authoritative rule):**
+- Requirement verification status shall be derived from the most recent non-superseded Verification Result linked to that requirement via VCRM Record ID and Test Case/Analysis Record ID.
+- "Most recent" is determined by result execution timestamp (`executed_at`) and, where required by process, independent review completion timestamp.
+- Required status mapping:
+  - No valid result linked: `Open`
+  - Verification started but closure criteria not met: `In Work`
+  - Latest result passes defined criteria and required reviews: `Verified`
+  - Formal closure complete in VCRM with approved evidence record: `Closed`
+  - Approved waiver/deviation path accepted in VCRM: `Waived`
+- Requirement status may not be manually set to `Verified` or `Closed` without a linked latest Verification Result ID and a corresponding VCRM status supporting that state.
 
 ---
 
@@ -150,6 +165,7 @@ Proactively analyze the requirements architecture to surface the following categ
 |---|---|---|
 | Requirement with no parent and no Derived flag | Orphaned requirement — untraceable origin | Flag as architecture error; assign parent or designate Derived with rationale |
 | Leaf-level requirement with no verification activity | Unverified obligation | Assign verification method and create corresponding VCRM entry |
+| Requirement status updated without linked latest Verification Result ID | Status not evidence-based | Recompute status from latest valid result and update traceability links |
 | Safety requirement not in the main requirements baseline | Segregated safety requirements — breaks unified compliance record | Merge into main baseline with traceability to safety analysis |
 | Derived requirement with no rationale | Unmanaged design decision | Add derivation rationale identifying the design decision and safety review status |
 | Numeric value in requirement with no Design Value ID | Undeclared design value — ungoverned number in the baseline | Register value in SK-DV-001 and reference Value ID in requirement traceability |
@@ -174,6 +190,7 @@ Proactively analyze the requirements architecture to surface the following categ
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release — aviation-scoped |
 | 2.0 | [Date] | [Author] | Generalized to program-agnostic scope. Aviation content migrated to SK-REQ-003-AVN. Skill header block added. Consistency fixes applied: verification methods aligned to 5, cross-references added, DAL references deferred to SK-CERT-001. |
+| 2.1 | [Date] | [Author] | Standardized verification status vocabulary (`Open / In Work / Verified / Closed / Waived`). Added mandatory requirement-to-verification tuple fields (VCRM Record ID, Test Case/Analysis Record ID, latest Verification Result ID). Added authoritative latest-result status derivation rule and anti-pattern for non-evidence-based status updates. |
 
 ---
 

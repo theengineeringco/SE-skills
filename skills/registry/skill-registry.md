@@ -1,6 +1,6 @@
 Skill Name:        Skill Registry
-Version:           1.1
-Last Updated:      2026-03-22
+Version:           1.2
+Last Updated:      2026-03-24
 Maintained by:     Systems Engineering Lead
 
 ---
@@ -33,19 +33,19 @@ Maintained by:     Systems Engineering Lead
 |---|---|---|---|---|---|---|---|---|
 | SK-REQ-001 | Requirements Writing | 2.1 | Requirements | General | None | SK-REQ-002 | Active | /skills/requirements/requirements-writing-skill-v2.1.md |
 | SK-REQ-002 | Requirements Writing — Aviation Certification Addendum | 1.0 | Requirements | Aviation | SK-REQ-001 | None | Active | /skills/requirements/requirements-writing-aviation-addendum-v1.0.md |
-| SK-REQ-003 | Requirements Capture, Traceability & Management | 2.0 | Requirements | General | SK-REQ-001 | SK-REQ-003-AVN | Active | /skills/requirements/requirements-capture-traceability-management-v2.0.md |
+| SK-REQ-003 | Requirements Capture, Traceability & Management | 2.1 | Requirements | General | SK-REQ-001 | SK-REQ-003-AVN | Active | /skills/requirements/requirements-capture-traceability-management-v2.1.md |
 | SK-REQ-003-AVN | Requirements Capture, Traceability & Management — Aviation Addendum | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-CERT-001 | None | Active | /skills/requirements/requirements-capture-traceability-management-aviation-addendum-v1.0.md |
-| SK-REQ-004 | Requirements Field Specification | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-REQ-003-AVN | None | Active | /skills/requirements/requirements-field-specification-v1.0.md |
+| SK-REQ-004 | Requirements Field Specification | 1.0 | Requirements | General | SK-REQ-001, SK-REQ-003, SK-VV-001 | None | Active | /skills/requirements/requirements-field-specification-v1.0.md |
 | SK-CERT-001 | Regulatory & Certification Expertise | 1.0 | Certification | Aviation | None | None | Active | /skills/certification/regulatory-certification-expertise-v1.0.md |
-| SK-VV-001 | Verification & Validation Planning | 2.0 | Verification | General | SK-REQ-003 | SK-VV-001-AVN | Active | /skills/verification/vv-planning-v2.0.md |
-| SK-VV-001-AVN | Verification & Validation Planning — Aviation Addendum | 1.0 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-CERT-001 | None | Active | /skills/verification/vv-planning-aviation-addendum-v1.0.md |
-| SK-VER-001 | Verification | 1.1 | Verification | General | SK-REQ-003, SK-VV-001, SK-DV-001 | SK-VER-001-AVN | Active | /skills/verification/verification-v1.1.md |
-| SK-VER-001-AVN | Verification — Aviation Addendum | 1.1 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-VV-001-AVN, SK-VER-001, SK-CERT-001 | None | Active | /skills/verification/verification-aviation-addendum-v1.1.md |
+| SK-VV-001 | Verification & Validation Planning | 2.1 | Verification | General | SK-REQ-003 | SK-VV-001-AVN | Active | /skills/verification/vv-planning-v2.1.md |
+| SK-VV-001-AVN | Verification & Validation Planning — Aviation Addendum | 1.1 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-CERT-001 | SK-VER-001-AVN | Active | /skills/verification/vv-planning-aviation-addendum-v1.1.md |
+| SK-VER-001 | Verification | 1.2 | Verification | General | SK-REQ-003, SK-VV-001, SK-DV-001 | SK-VER-001-AVN | Active | /skills/verification/verification-v1.2.md |
+| SK-VER-001-AVN | Verification — Aviation Addendum | 1.2 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-VV-001-AVN, SK-VER-001, SK-CERT-001 | None | Active | /skills/verification/verification-aviation-addendum-v1.2.md |
 | SK-INTF-001 | Interface Capture & Specification | 2.0 | Interfaces | General | SK-REQ-001, SK-REQ-003 | SK-INTF-001-AVN | Active | /skills/interfaces/interface-capture-specification-v2.0.md |
 | SK-INTF-001-AVN | Interface Capture & Specification — Aviation Addendum | 1.0 | Interfaces | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-REQ-003-AVN, SK-INTF-001, SK-CERT-001 | None | Active | /skills/interfaces/interface-capture-specification-aviation-addendum-v1.0.md |
-| SK-INTF-002 | Interface Management | 2.0 | Interfaces | General | SK-INTF-001, SK-REQ-003 | SK-INTF-002-AVN | Active | /skills/interfaces/interface-management-v2.0.md |
+| SK-INTF-002 | Interface Management | 2.1 | Interfaces | General | SK-INTF-001, SK-REQ-003 | SK-INTF-002-AVN | Active | /skills/interfaces/interface-management-v2.1.md |
 | SK-INTF-002-AVN | Interface Management — Aviation Addendum | 1.0 | Interfaces | Aviation | SK-INTF-001, SK-INTF-001-AVN, SK-INTF-002, SK-REQ-003, SK-REQ-003-AVN, SK-CERT-001 | None | Active | /skills/interfaces/interface-management-aviation-addendum-v1.0.md |
-| SK-DV-001 | Design Values Library | 1.0 | Design Values | General | SK-REQ-001, SK-REQ-003 | None | Active | /skills/design-values/design-values-library-v1.0.md |
+| SK-DV-001 | Design Values Library | 1.1 | Design Values | General | SK-REQ-001, SK-REQ-003 | SK-VER-001 | Active | /skills/design-values/design-values-library-v1.0.md |
 
 ---
 
@@ -53,12 +53,12 @@ Maintained by:     Systems Engineering Lead
 
 | Domain | General | Aviation | Total |
 |---|---|---|---|
-| Requirements | 2 | 3 | 5 |
+| Requirements | 3 | 2 | 5 |
 | Certification | 0 | 1 | 1 |
-| Verification | 3 | 3 | 6 |
-| Interfaces | 2 | 4 | 6 |
+| Verification | 2 | 2 | 4 |
+| Interfaces | 2 | 2 | 4 |
 | Design Values | 1 | 0 | 1 |
-| **Total** | **8** | **11** | **19** |
+| **Total** | **8** | **7** | **15** |
 
 ---
 
@@ -66,11 +66,7 @@ Maintained by:     Systems Engineering Lead
 
 | Item | Description | Action Required |
 |---|---|---|
-| SK-VV-001 | `Extended By` field previously listed `SK-VV-001-AVN` only. SK-VER-001 is now a consumer of SK-VV-001 (depends on it) but does not extend it — no change needed to SK-VV-001 itself. | None |
-| SK-DV-001 | Now referenced as a dependency by SK-VER-001. The `Extended By` field on SK-DV-001 should be updated to note this consumer relationship. | Minor update to SK-DV-001 header block — add SK-VER-001 to `Extended By` |
-| SK-VV-001-AVN | Now referenced as a dependency by SK-VER-001-AVN. The `Extended By` field on SK-VV-001-AVN should be updated to note this consumer relationship. | Minor update to SK-VV-001-AVN header block — add SK-VER-001-AVN to `Extended By` |
-| File rename | verification-v1.0.md → verification-v1.1.md | Rename file; retain v1.0 in Git history per versioning policy |
-| File rename | verification-aviation-addendum-v1.0.md → verification-aviation-addendum-v1.1.md | Rename file; retain v1.0 in Git history per versioning policy |
+| None | No pending registry consistency updates at this time. | None |
 
 ---
 
@@ -86,7 +82,7 @@ Maintained by:     Systems Engineering Lead
 | GAP-006 | Configuration Management | Medium | Open |
 | GAP-007 | Means of Compliance Documentation | Medium | Open |
 | GAP-008 | Human Factors & Crew Interface | Low–Medium | Open |
-| GAP-009 | Requirements Field Specification (General) | Low | Open |
+| GAP-009 | Requirements Field Specification (General) | Low | **Closed — 2026-03-24** |
 | GAP-010 | General-purpose SK-REQ-003 | Low | **Closed — Step 2** |
 | GAP-011 | General-purpose SK-INTF-001 | Low | **Closed — Step 3** |
 | GAP-012 | General-purpose SK-INTF-002 | Low | **Closed — Step 4** |
@@ -101,25 +97,36 @@ Maintained by:     Systems Engineering Lead
 The following diagram shows the dependency relationships between all active skills. Arrows indicate "depends on" direction.
 
 ```
-SK-CERT-001 ◄──────────────────────────────────────────────────────────┐
-                                                                        │
-SK-REQ-001 ◄── SK-REQ-002 ◄── SK-REQ-003-AVN ◄── SK-REQ-004           │
-    ▲               ▲               ▲                                   │
-    │               │               │                                   │
-SK-REQ-003 ─────────┘               │                                   │
-    │                               │                                   │
-    ├──► SK-VV-001 ──► SK-VV-001-AVN (+ SK-REQ-003-AVN, SK-CERT-001) ──┤
-    │        │                                                           │
-    │        ├──► SK-VER-001 ──► SK-VER-001-AVN (+ SK-VV-001-AVN,      │
-    │        │        │               SK-REQ-003-AVN, SK-CERT-001)       │
-    │        │        └──► SK-DV-001                                     │
-    │                                                                    │
-    ├──► SK-INTF-001 ──► SK-INTF-001-AVN (+ SK-REQ-002, SK-REQ-003-AVN,│
-    │                                        SK-CERT-001) ───────────────┤
-    │                                                                    │
-    └──► SK-INTF-002 ──► SK-INTF-002-AVN (+ SK-INTF-001, SK-INTF-001-AVN,
-                                             SK-REQ-003-AVN, SK-CERT-001)
+SK-CERT-001
+  ├──► SK-REQ-003-AVN
+  ├──► SK-VV-001-AVN
+  ├──► SK-VER-001-AVN
+  ├──► SK-INTF-001-AVN
+  └──► SK-INTF-002-AVN
 
-SK-DV-001 depends on: SK-REQ-001, SK-REQ-003
-SK-DV-001 is consumed by: SK-VER-001
+SK-REQ-001
+  ├──► SK-REQ-002
+  ├──► SK-REQ-003
+  ├──► SK-REQ-004
+  ├──► SK-INTF-001
+  └──► SK-DV-001
+
+SK-REQ-003
+  ├──► SK-REQ-003-AVN
+  ├──► SK-REQ-004
+  ├──► SK-VV-001
+  ├──► SK-VER-001
+  ├──► SK-INTF-001
+  ├──► SK-INTF-002
+  └──► SK-DV-001
+
+SK-VV-001
+  ├──► SK-REQ-004
+  ├──► SK-VV-001-AVN
+  └──► SK-VER-001
+
+SK-VV-001-AVN ──► SK-VER-001-AVN
+SK-VER-001 ──► SK-VER-001-AVN
+SK-INTF-001 ──► SK-INTF-001-AVN
+SK-INTF-002 ──► SK-INTF-002-AVN
 ```
