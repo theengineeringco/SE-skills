@@ -1,5 +1,5 @@
 Skill Name:        Skill Registry
-Version:           1.3
+Version:           1.4
 Last Updated:      2026-03-24
 Maintained by:     Systems Engineering Lead
 
@@ -36,17 +36,18 @@ Maintained by:     Systems Engineering Lead
 | SK-REQ-003 | Requirements Capture, Traceability & Management | 2.1 | Requirements | General | SK-REQ-001 | SK-REQ-003-AVN | Active | /skills/requirements/requirements-capture-traceability-management-v2.1.md |
 | SK-REQ-003-AVN | Requirements Capture, Traceability & Management — Aviation Addendum | 1.0 | Requirements | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-CERT-001 | None | Active | /skills/requirements/requirements-capture-traceability-management-aviation-addendum-v1.0.md |
 | SK-REQ-004 | Requirements Field Specification | 1.1 | Requirements | General | SK-REQ-001, SK-REQ-003, SK-VV-001, SK-DM-001 | None | Active | /skills/requirements/requirements-field-specification-v1.0.md |
-| SK-DM-001 | SE Tool Data Model | 1.0 | Meta | General | None | SK-REQ-004, SK-VV-001, SK-VER-001, SK-INTF-001, SK-INTF-002, SK-DV-001 | Active | /skills/meta/se-tool-data-model-skill-v1.0.md |
+| SK-DM-001 | SE Tool Data Model | 1.0 | Meta | General | None | SK-REQ-004, SK-VV-001, SK-VER-001, SK-VER-002, SK-INTF-001, SK-INTF-002, SK-DV-001 | Active | /skills/meta/se-tool-data-model-skill-v1.0.md |
 | SK-CERT-001 | Regulatory & Certification Expertise | 1.0 | Certification | Aviation | None | None | Active | /skills/certification/regulatory-certification-expertise-v1.0.md |
 | SK-VV-001 | Verification & Validation Planning | 2.2 | Verification | General | SK-REQ-003, SK-DM-001 | SK-VV-001-AVN | Active | /skills/verification/vv-planning-v2.1.md |
 | SK-VV-001-AVN | Verification & Validation Planning — Aviation Addendum | 1.1 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-CERT-001 | SK-VER-001-AVN | Active | /skills/verification/vv-planning-aviation-addendum-v1.1.md |
-| SK-VER-001 | Verification | 1.3 | Verification | General | SK-REQ-003, SK-VV-001, SK-DV-001, SK-DM-001 | SK-VER-001-AVN | Active | /skills/verification/verification-v1.2.md |
+| SK-VER-001 | Verification | 1.3 | Verification | General | SK-REQ-003, SK-VV-001, SK-DV-001, SK-DM-001 | SK-VER-001-AVN, SK-VER-002 | Active | /skills/verification/verification-v1.2.md |
 | SK-VER-001-AVN | Verification — Aviation Addendum | 1.2 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-VV-001-AVN, SK-VER-001, SK-CERT-001 | None | Active | /skills/verification/verification-aviation-addendum-v1.2.md |
+| SK-VER-002 | Flow-Onshape Mass Verification Automation | 1.0 | Verification | General | SK-REQ-003, SK-VV-001, SK-VER-001, SK-DV-001, SK-DM-001 | None | Active | /skills/verification/flow-onshape-mass-verification-automation-v1.0.md |
 | SK-INTF-001 | Interface Capture & Specification | 2.1 | Interfaces | General | SK-REQ-001, SK-REQ-003, SK-DM-001 | SK-INTF-001-AVN | Active | /skills/interfaces/interface-capture-specification-v2.0.md |
 | SK-INTF-001-AVN | Interface Capture & Specification — Aviation Addendum | 1.0 | Interfaces | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-REQ-003-AVN, SK-INTF-001, SK-CERT-001 | None | Active | /skills/interfaces/interface-capture-specification-aviation-addendum-v1.0.md |
 | SK-INTF-002 | Interface Management | 2.2 | Interfaces | General | SK-INTF-001, SK-REQ-003, SK-DM-001 | SK-INTF-002-AVN | Active | /skills/interfaces/interface-management-v2.1.md |
 | SK-INTF-002-AVN | Interface Management — Aviation Addendum | 1.0 | Interfaces | Aviation | SK-INTF-001, SK-INTF-001-AVN, SK-INTF-002, SK-REQ-003, SK-REQ-003-AVN, SK-CERT-001 | None | Active | /skills/interfaces/interface-management-aviation-addendum-v1.0.md |
-| SK-DV-001 | Design Values Library | 1.2 | Design Values | General | SK-REQ-001, SK-REQ-003, SK-DM-001 | SK-VER-001 | Active | /skills/design-values/design-values-library-v1.0.md |
+| SK-DV-001 | Design Values Library | 1.2 | Design Values | General | SK-REQ-001, SK-REQ-003, SK-DM-001 | SK-VER-001, SK-VER-002 | Active | /skills/design-values/design-values-library-v1.0.md |
 
 ---
 
@@ -56,11 +57,11 @@ Maintained by:     Systems Engineering Lead
 |---|---|---|---|
 | Requirements | 3 | 2 | 5 |
 | Certification | 0 | 1 | 1 |
-| Verification | 2 | 2 | 4 |
+| Verification | 3 | 2 | 5 |
 | Interfaces | 2 | 2 | 4 |
 | Design Values | 1 | 0 | 1 |
 | Meta | 1 | 0 | 1 |
-| **Total** | **9** | **7** | **16** |
+| **Total** | **10** | **7** | **17** |
 
 ---
 
@@ -127,6 +128,7 @@ SK-DM-001
   ├──► SK-REQ-004
   ├──► SK-VV-001
   ├──► SK-VER-001
+  ├──► SK-VER-002
   ├──► SK-INTF-001
   ├──► SK-INTF-002
   └──► SK-DV-001
@@ -134,10 +136,15 @@ SK-DM-001
 SK-VV-001
   ├──► SK-REQ-004
   ├──► SK-VV-001-AVN
-  └──► SK-VER-001
+  ├──► SK-VER-001
+  └──► SK-VER-002
 
 SK-VV-001-AVN ──► SK-VER-001-AVN
 SK-VER-001 ──► SK-VER-001-AVN
+SK-VER-001 ──► SK-VER-002
 SK-INTF-001 ──► SK-INTF-001-AVN
 SK-INTF-002 ──► SK-INTF-002-AVN
+SK-DV-001 ──► SK-VER-002
+SK-DM-001 ──► SK-VER-002
+SK-REQ-003 ──► SK-VER-002
 ```
