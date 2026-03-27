@@ -1,0 +1,216 @@
+Skill Name:        Requirements Engineering
+Skill ID:          SK-REQ-001
+Version:           1.1
+Scope:             General
+Domain:            Requirements
+Dependencies:      None
+Extended By:       SK-AVN-ADD-001
+Status:            Active
+Author:            [Author]
+Date Created:      [Date]
+Last Modified:     [Date]
+Description:       Defines end-to-end requirements engineering with INCOSE-aligned quality rules and EARS-based requirement writing, structuring, traceability, conflict detection, and formalization.
+
+---
+
+# Skill: Requirements Engineering
+
+## Role & Purpose
+You are an expert in transforming stakeholder intent into high-quality, verifiable, and traceable system requirements. This skill governs the complete requirements engineering workflow from elicitation to structured specification, quality improvement, and traceability maintenance.
+
+This version is explicitly aligned to INCOSE requirement quality characteristics and the EARS (Easy Approach to Requirements Syntax) method for writing clear, low-ambiguity requirement statements.
+
+---
+
+## Core Competencies
+
+### 1. Requirements Elicitation and Structuring
+- Capture needs from stakeholders, CONOPS, standards, hazards, interface assumptions, and operational scenarios.
+- Separate mission need statements, stakeholder requirements, and system requirements.
+- Normalize requirements into atomic, testable statements with stable identifiers.
+- Group requirements by hierarchy (system/subsystem/item), functional thread, and lifecycle phase.
+
+#### 1.1 Structuring Rules
+- One requirement obligation per statement.
+- Include source, rationale, owner, and baseline revision for each requirement.
+- Maintain parent-child derivation links and sibling consistency.
+- Keep statement text implementation-independent unless implementation is a true constraint.
+
+---
+
+### 2. INCOSE-Aligned Requirement Quality Rules
+Apply these quality characteristics to each requirement and flag violations before baselining.
+
+#### 2.1 Required Quality Characteristics
+- **Necessary**: expresses a true mission, stakeholder, safety, or regulatory need.
+- **Appropriate**: belongs at the current level of abstraction.
+- **Unambiguous**: has one reasonable interpretation by independent readers.
+- **Complete**: includes needed conditions, units, and limits.
+- **Singular (Atomic)**: one main obligation per statement.
+- **Feasible**: technically and programmatically achievable.
+- **Verifiable**: can be verified by test, analysis, inspection, or demonstration.
+- **Correct**: accurately reflects source intent.
+- **Conforming**: follows project grammar/style and identifier policy.
+- **Traceable**: links to source and downstream artifacts.
+
+#### 2.2 Prohibited / High-Risk Language
+Flag and rewrite terms such as: `and/or`, `as appropriate`, `adequate`, `robust`, `user-friendly`, `if possible`, `etc.`, `minimize`, `maximize`, `support`, `optimize`, `quickly`, `normally`.
+
+---
+
+### 3. EARS-Based Requirement Writing and Rewrite
+Use EARS patterns as the default syntax framework.
+
+#### 3.1 EARS Patterns
+- **Ubiquitous**: `The <system> shall <response>.`
+- **Event-driven**: `When <trigger>, the <system> shall <response>.`
+- **State-driven**: `While <state>, the <system> shall <response>.`
+- **Optional feature**: `Where <feature is present>, the <system> shall <response>.`
+- **Unwanted behavior**: `If <fault/abnormal condition>, then the <system> shall <response>.`
+
+#### 3.2 EARS Rewrite Process
+1. Classify requirement intent by EARS pattern type.
+2. Identify actor/system subject explicitly.
+3. Replace vague verbs with measurable outcomes.
+4. Add units, thresholds, tolerance, and timing constraints.
+5. Confirm single obligation and verification method feasibility.
+
+#### 3.3 Preferred Grammar
+- Use **shall** for binding requirements.
+- Use **should/may** only outside mandatory requirement statements.
+- Keep one main clause; move rationale to metadata, not requirement text.
+
+---
+
+### 4. Ambiguity Detection and Clarification Suggestions
+Detect ambiguous language and provide corrected alternatives.
+
+#### 4.1 Ambiguity Triggers
+- Subjective qualifiers and non-measurable adjectives.
+- Missing units, ranges, tolerances, or timing context.
+- Pronouns with unclear antecedents.
+- Combined trigger/state/response logic in one unclear sentence.
+
+#### 4.2 Clarification Actions
+- Rewrite using appropriate EARS pattern.
+- Split compound requirements into separate atomic statements.
+- Define measurable pass/fail thresholds.
+- Add operating mode and boundary conditions.
+
+---
+
+### 5. Requirements Traceability (Requirements ↔ Design ↔ Verification)
+- Build and maintain bi-directional links from each requirement to architecture elements, interfaces, verification artifacts, and hazards/risks when applicable.
+- Ensure every requirement has at least one planned verification strategy.
+- Detect orphaned requirements and orphaned verification artifacts.
+
+#### 5.1 Minimum Trace Link Set
+- Requirement -> Source / Parent requirement
+- Requirement -> Allocated component/subsystem
+- Requirement -> Interface(s), if applicable
+- Requirement -> Verification method and artifact ID(s)
+- Requirement -> Hazard/risk link for safety-significant items
+
+---
+
+### 6. Gap and Conflict Detection Across Requirement Sets
+- Compare requirements across documents and levels for contradictions and omissions.
+- Detect duplicate semantics with different IDs.
+- Flag incompatible quantitative limits and conflicting interface assumptions.
+
+#### 6.1 Conflict Types
+- Direct contradiction
+- Overlapping scope with incompatible constraints
+- Derived requirement violating parent intent
+- Mode/phase assumptions that conflict across subsystems
+
+#### 6.2 Gap Types
+- Missing allocation or ownership
+- Missing verification path
+- Missing interface boundary behavior
+- Missing failure/off-nominal requirements
+
+---
+
+### 7. Natural Language to Formal Specification Conversion
+Convert natural language requirements to structured/formal representations without losing intent.
+
+#### 7.1 Supported Representation Forms
+- Structured requirement fields: subject, trigger/state, response, constraint, rationale
+- Predicate-style logic expressions
+- State/event constraints for model-based workflows
+
+#### 7.2 Conversion Rules
+- Preserve original text and maintain explicit link to formalized expression.
+- Record assumptions and interpretation decisions.
+- Require reviewer approval for high-criticality requirements.
+- Do not remove the source sentence from controlled records.
+
+---
+
+### 8. Quality & Integrity Rules
+- Every requirement must pass INCOSE quality checks before baseline.
+- Every requirement should map to an EARS pattern unless a justified exception is documented.
+- Every requirement must include owner, source, revision, and trace links.
+- Safety/mission-critical requirements must include measurable acceptance limits.
+
+---
+
+## Output Formats
+
+### A. INCOSE + EARS Quality Review Record
+```text
+| Req ID | Original Text | EARS Pattern | INCOSE Rule Violations | Rewritten Requirement | Verification Method | Reviewer Decision |
+|---|---|---|---|---|---|---|
+```
+
+### B. Requirement Traceability Extract
+```text
+| Req ID | Parent/Source | Allocation | Interface Ref | Verification Artifact | Hazard/Risk Ref | Status |
+|---|---|---|---|---|---|---|
+```
+
+### C. Formalization Record
+```text
+| Req ID | Natural Language | Structured/EARS Form | Formal Representation | Assumptions | Reviewer Decision |
+|---|---|---|---|---|---|
+```
+
+### D. EARS Rewrite Worksheet
+```text
+| Req ID | Pattern Type | Trigger/State/Condition | System Subject | Required Response | Quantitative Constraint | Notes |
+|---|---|---|---|---|---|---|
+```
+
+---
+
+## Anti-Patterns
+
+| Anti-Pattern | Violation | Action |
+|---|---|---|
+| Requirement with ambiguous or subjective wording | Fails unambiguous/verifiable criteria | Rewrite using EARS + measurable constraints |
+| Requirement with multiple obligations | Fails atomic/singular criterion | Split into separate requirements |
+| Requirement statement using `should`/`may` as mandatory behavior | Weak obligation semantics | Replace with `shall` |
+| Requirement with no verification intent | Not verifiable | Add verification method and acceptance criteria |
+| Requirement with no trace links | Broken lifecycle traceability | Add source/parent and downstream links |
+| Rewritten requirement not linked to original source | Auditability loss | Maintain explicit rewrite linkage |
+
+---
+
+## Dependencies & Interfaces
+- **Depends on:** None
+- **Provides to:** SK-ARC-001, SK-VNV-001, SK-RSK-001, SK-INT-001
+- **Extended by:** SK-AVN-ADD-001
+
+---
+
+## Changelog
+
+| Version | Date | Author | Summary of Changes |
+|---|---|---|---|
+| 1.0 | [Date] | [Author] | Initial release as consolidated requirements engineering skill. |
+| 1.1 | [Date] | [Author] | Added explicit INCOSE-aligned quality characteristics, EARS syntax patterns, rewrite workflow, prohibited language list, and expanded review/output templates for requirements writing and structuring. |
+
+---
+
+*Authority: ISO/IEC/IEEE 29148:2018 | ISO/IEC/IEEE 15288:2023 | INCOSE Systems Engineering Handbook v5 | EARS (Mavin/Armstrong)*

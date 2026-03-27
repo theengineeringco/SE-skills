@@ -1,5 +1,5 @@
 Skill Name:        Skill Registry
-Version:           2.0
+Version:           2.1
 Last Updated:      2026-03-27
 Maintained by:     Systems Engineering Lead
 
@@ -31,7 +31,7 @@ Maintained by:     Systems Engineering Lead
 
 | ID | Name | Version | Domain | Scope | Dependencies | Extended By | Status | File |
 |---|---|---|---|---|---|---|---|---|
-| SK-REQ-001 | Requirements Engineering | 1.0 | Requirements | General | None | SK-AVN-ADD-001 | Active | /skills/requirements/requirements-engineering-v1.0.md |
+| SK-REQ-001 | Requirements Engineering | 1.1 | Requirements | General | None | SK-AVN-ADD-001 | Active | /skills/requirements/requirements-engineering-v1.1.md |
 | SK-ARC-001 | Architecture & Design | 1.0 | Architecture | General | SK-REQ-001 | SK-AVN-ADD-001 | Active | /skills/architecture/architecture-and-design-v1.0.md |
 | SK-VNV-001 | Verification & Validation | 1.0 | Verification | General | SK-REQ-001, SK-ARC-001 | SK-AVN-ADD-001 | Active | /skills/verification/verification-and-validation-v1.0.md |
 | SK-RSK-001 | Risk & Safety Analysis | 1.0 | Safety | General | SK-REQ-001, SK-ARC-001, SK-VNV-001 | SK-AVN-ADD-001 | Active | /skills/safety/risk-and-safety-analysis-v1.0.md |
