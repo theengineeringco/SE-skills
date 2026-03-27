@@ -1,6 +1,6 @@
 Skill Name:        Skill Registry
-Version:           1.3
-Last Updated:      2026-03-24
+Version:           1.4
+Last Updated:      2026-03-27
 Maintained by:     Systems Engineering Lead
 
 ---
@@ -41,6 +41,7 @@ Maintained by:     Systems Engineering Lead
 | SK-VV-001 | Verification & Validation Planning | 2.2 | Verification | General | SK-REQ-003, SK-DM-001 | SK-VV-001-AVN | Active | /skills/verification/vv-planning-v2.1.md |
 | SK-VV-001-AVN | Verification & Validation Planning — Aviation Addendum | 1.1 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-CERT-001 | SK-VER-001-AVN | Active | /skills/verification/vv-planning-aviation-addendum-v1.1.md |
 | SK-VER-001 | Verification | 1.3 | Verification | General | SK-REQ-003, SK-VV-001, SK-DV-001, SK-DM-001 | SK-VER-001-AVN | Active | /skills/verification/verification-v1.2.md |
+| SK-VCRM-001 | Verification Cross-Reference Matrix (VCRM) Authoring & Coverage Assessment | 1.0 | Verification | General | SK-REQ-003, SK-VV-001, SK-VER-001, SK-DM-001 | None | Active | /skills/verification/verification-cross-reference-matrix-v1.0.md |
 | SK-VER-001-AVN | Verification — Aviation Addendum | 1.2 | Verification | Aviation | SK-REQ-003, SK-REQ-003-AVN, SK-VV-001, SK-VV-001-AVN, SK-VER-001, SK-CERT-001 | None | Active | /skills/verification/verification-aviation-addendum-v1.2.md |
 | SK-INTF-001 | Interface Capture & Specification | 2.1 | Interfaces | General | SK-REQ-001, SK-REQ-003, SK-DM-001 | SK-INTF-001-AVN | Active | /skills/interfaces/interface-capture-specification-v2.0.md |
 | SK-INTF-001-AVN | Interface Capture & Specification — Aviation Addendum | 1.0 | Interfaces | Aviation | SK-REQ-001, SK-REQ-002, SK-REQ-003, SK-REQ-003-AVN, SK-INTF-001, SK-CERT-001 | None | Active | /skills/interfaces/interface-capture-specification-aviation-addendum-v1.0.md |
@@ -56,11 +57,11 @@ Maintained by:     Systems Engineering Lead
 |---|---|---|---|
 | Requirements | 3 | 2 | 5 |
 | Certification | 0 | 1 | 1 |
-| Verification | 2 | 2 | 4 |
+| Verification | 3 | 2 | 5 |
 | Interfaces | 2 | 2 | 4 |
 | Design Values | 1 | 0 | 1 |
 | Meta | 1 | 0 | 1 |
-| **Total** | **9** | **7** | **16** |
+| **Total** | **10** | **7** | **17** |
 
 ---
 
@@ -119,6 +120,7 @@ SK-REQ-003
   ├──► SK-REQ-004
   ├──► SK-VV-001
   ├──► SK-VER-001
+  ├──► SK-VCRM-001
   ├──► SK-INTF-001
   ├──► SK-INTF-002
   └──► SK-DV-001
@@ -127,14 +129,18 @@ SK-DM-001
   ├──► SK-REQ-004
   ├──► SK-VV-001
   ├──► SK-VER-001
+  ├──► SK-VCRM-001
   ├──► SK-INTF-001
   ├──► SK-INTF-002
   └──► SK-DV-001
 
 SK-VV-001
   ├──► SK-REQ-004
+  ├──► SK-VCRM-001
   ├──► SK-VV-001-AVN
   └──► SK-VER-001
+
+SK-VER-001 ──► SK-VCRM-001
 
 SK-VV-001-AVN ──► SK-VER-001-AVN
 SK-VER-001 ──► SK-VER-001-AVN
