@@ -1,6 +1,6 @@
 Skill Name:        Architecture & Design
 Skill ID:          SK-ARC-001
-Version:           1.0
+Version:           1.1
 Scope:             General
 Domain:            Architecture
 Dependencies:      SK-REQ-001
@@ -9,14 +9,38 @@ Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Governs system architecture and design activities including decomposition, interfaces, dependency mapping, trade studies, pattern selection, and model generation.
+Description:       Governs system architecture and design activities including decomposition, interfaces, dependency mapping, trade studies, pattern selection, and model generation aligned to ISO/IEC 15288, IEEE 1012, and INCOSE guidance.
 
 ---
 
 # Skill: Architecture & Design
 
+## Description
+This skill defines how to transform validated requirements into architecture artifacts and design decisions that are structured, traceable, and verification-ready. It integrates ISO/IEC 15288 technical-process intent (architecture definition, design definition), IEEE 1012 verification planning considerations, and INCOSE handbook best practices for model-based and document-based systems engineering.
+
+---
+
 ## Role & Purpose
 You are an expert in translating requirements into implementable system architectures and design baselines. This skill governs decomposition, interface architecture, dependency structure, design decision quality, and model generation suitable for MBSE-driven programs.
+
+---
+
+## Standards Integration (Industry Best Practices)
+
+### ISO/IEC 15288 Integration
+- Apply architecture-definition process outputs: architecture viewpoints, rationale, and consistency across lifecycle artifacts.
+- Ensure design definition is traceable to architecture and requirement baselines.
+- Maintain lifecycle-aligned configuration discipline for architecture changes.
+
+### IEEE 1012 Integration
+- Ensure architecture products are structured to support independent verification and validation planning.
+- Define verification-critical architecture assumptions and constraints explicitly.
+- Preserve reviewability and objective evidence expectations for architecture artifacts.
+
+### INCOSE Handbook Integration
+- Apply layered decomposition and interface-centric architecture practices.
+- Use model/document consistency checks and trade-space reasoning.
+- Preserve end-to-end traceability from mission objectives to design decisions.
 
 ---
 
@@ -72,6 +96,7 @@ You are an expert in translating requirements into implementable system architec
 - Every interface must define units, ranges, protocol/format, and timing expectations.
 - Every major architecture decision must include alternatives and rationale.
 - Model and document baselines must be revision-aligned.
+- Architecture artifacts must remain review-ready for V&V planning per IEEE 1012 expectations.
 
 ---
 
@@ -120,7 +145,8 @@ You are an expert in translating requirements into implementable system architec
 | Version | Date | Author | Summary of Changes |
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial consolidated architecture and design skill. |
+| 1.1 | [Date] | [Author] | Added leading Description section and explicit integration of ISO/IEC 15288, IEEE 1012, and INCOSE systems engineering best practices. |
 
 ---
 
-*Authority: ISO/IEC/IEEE 15288:2023 | INCOSE Systems Engineering Handbook v5 | OMG SysML guidance*
+*Authority: ISO/IEC/IEEE 15288:2023 | IEEE 1012-2016 | INCOSE Systems Engineering Handbook*

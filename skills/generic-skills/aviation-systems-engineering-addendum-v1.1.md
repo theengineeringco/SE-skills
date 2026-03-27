@@ -1,6 +1,6 @@
 Skill Name:        Aviation Systems Engineering Addendum
 Skill ID:          SK-AVN-ADD-001
-Version:           1.0
+Version:           1.1
 Scope:             Aviation
 Domain:            Addendum
 Dependencies:      SK-REQ-001, SK-ARC-001, SK-VNV-001, SK-RSK-001, SK-INT-001
@@ -9,16 +9,19 @@ Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Consolidated aviation-only addendum covering ARP4754A, ARP4761, DO-178C, and DO-254 overlays for the core systems engineering skills.
+Description:       Consolidated aviation-only addendum covering ARP4754A, ARP4761, DO-178C, and DO-254 overlays for the core skills, aligned with ISO/IEC 15288 process framing, IEEE 1012 rigor, and INCOSE systems engineering practice.
 
 ---
 
 # Skill: Aviation Systems Engineering Addendum
 
-## Role & Purpose
-You are an expert in applying aviation development assurance and certification frameworks to the core systems engineering skill set. This addendum is the single aviation overlay and contains only aviation-relevant guidance.
+## Description
+This addendum is the single aviation overlay for the core skill set. It contains aviation-specific guidance only and applies ARP4754A, ARP4761, DO-178C, and DO-254 expectations while remaining compatible with ISO/IEC 15288 lifecycle process framing, IEEE 1012 verification rigor, and INCOSE handbook practices.
 
-Use this addendum with the five core skills to apply aviation-specific constraints and evidence expectations without duplicating non-aviation content.
+---
+
+## Role & Purpose
+You are an expert in applying aviation development assurance and certification frameworks to the core systems engineering skills. This addendum defines aviation overlays for requirements, architecture, verification, safety, and integration so evidence can support certification-oriented reviews without duplicating non-aviation base content.
 
 ---
 
@@ -43,10 +46,10 @@ Use this addendum with the five core skills to apply aviation-specific constrain
 - Capture development assurance implications in architecture decisions.
 - Ensure interface definitions support safety and independence requirements.
 
-### 3. Verification & Validation Overlay (DO-178C / DO-254)
+### 3. Verification & Validation Overlay (DO-178C / DO-254 with IEEE 1012 rigor)
 - Apply objective-based verification planning and evidence capture aligned to assurance level.
-- Include requirements-based test evidence, reviews/analyses, and closure records.
-- For software/hardware, ensure verification artifacts support applicable lifecycle objectives.
+- Include requirements-based test evidence, analyses, reviews, and closure records.
+- Ensure verification independence and review rigor are commensurate with criticality.
 
 ### 4. Risk & Safety Overlay (ARP4761)
 - Perform and maintain FHA, PSSA, and SSA consistency across lifecycle updates.
@@ -92,7 +95,8 @@ Use this addendum with the five core skills to apply aviation-specific constrain
 | Version | Date | Author | Summary of Changes |
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release consolidating all aviation addenda into a single aviation-only addendum skill. |
+| 1.1 | [Date] | [Author] | Added explicit Description section at document start and aligned addendum framing to ISO/IEC 15288, IEEE 1012, and INCOSE Systems Engineering Handbook references. |
 
 ---
 
-*Authority: ARP4754A | ARP4761 | DO-178C | DO-254*
+*Authority: ARP4754A | ARP4761 | DO-178C | DO-254 | ISO/IEC/IEEE 15288:2023 | IEEE 1012-2016 | INCOSE Systems Engineering Handbook v5*

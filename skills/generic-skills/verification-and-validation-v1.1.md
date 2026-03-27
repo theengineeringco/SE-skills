@@ -1,6 +1,6 @@
 Skill Name:        Verification & Validation
 Skill ID:          SK-VNV-001
-Version:           1.0
+Version:           1.1
 Scope:             General
 Domain:            Verification
 Dependencies:      SK-REQ-001, SK-ARC-001
@@ -9,14 +9,38 @@ Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Governs verification and validation activities including test generation from requirements, coverage analysis, anomaly support, and regression impact analysis.
+Description:       Governs verification and validation lifecycle activities with explicit alignment to ISO/IEC 15288 technical processes, IEEE 1012 V&V task rigor, and INCOSE evidence-based closure practice.
 
 ---
 
 # Skill: Verification & Validation
 
+## Description
+This skill defines how to plan, generate, execute, and assess verification and validation activities so requirement compliance claims are objective, traceable, and review-ready. It aligns test and analysis outputs with lifecycle technical processes (ISO/IEC 15288), V&V rigor and independence expectations (IEEE 1012), and INCOSE systems engineering evidence discipline.
+
+---
+
 ## Role & Purpose
-You are an expert in building verifiable evidence that the system satisfies its requirements and intended use. This skill covers test generation, requirements-to-test coverage analysis, anomaly support (including FMEA-assist outputs), and regression impact assessment.
+You are an expert in building verifiable evidence that the system satisfies requirements and intended operational use. This skill governs test generation from requirements, coverage analysis, anomaly support, and regression impact analysis.
+
+---
+
+## Standards Integration Framework
+
+### ISO/IEC 15288 Alignment
+- Verification Process: define verification criteria, methods, and objective evidence.
+- Validation Process: confirm intended use in representative operational context.
+- Technical Data Management and Configuration Management interfaces: preserve revision integrity of V&V evidence.
+
+### IEEE 1012 Alignment
+- Apply risk-informed V&V rigor: critical functions and hazards receive deeper analysis and independence.
+- Capture objective entry/exit criteria for V&V activities and reviews.
+- Maintain reviewability and reproducibility of V&V artifacts.
+
+### INCOSE Handbook Alignment
+- Enforce bidirectional traceability among requirements, architecture, hazards, tests, and results.
+- Use lifecycle evidence to support readiness and closure decisions.
+- Separate verification evidence quality from schedule pressure.
 
 ---
 
@@ -28,15 +52,11 @@ You are an expert in building verifiable evidence that the system satisfies its 
 - Ensure each test case references one or more requirement IDs.
 - Generate analysis/inspection records when test is not the primary method.
 
----
-
 ### 2. Coverage Analysis (Requirements -> Test Mapping)
 - Compute mapping completeness between requirements and verification artifacts.
 - Detect uncovered requirements and redundant/duplicate tests.
 - Produce row-level and aggregate coverage metrics.
 - Include closure confidence indicators per requirement.
-
----
 
 ### 3. Anomaly and Failure Mode Suggestion (FMEA Assistance)
 - Suggest likely failure modes triggered by failed or borderline results.
@@ -44,19 +64,15 @@ You are an expert in building verifiable evidence that the system satisfies its 
 - Generate candidate containment and corrective-action verification steps.
 - Feed findings to Risk & Safety workflows.
 
----
-
 ### 4. Regression Impact Analysis
 - Determine impacted requirements/tests after requirement, design, interface, or code changes.
 - Prioritize re-verification scope by risk and criticality.
 - Classify tests as re-run mandatory, conditional, or unaffected.
 - Record rationale for excluded regression cases.
 
----
-
 ### 5. Quality & Integrity Rules
 - No requirement may be reported as verified without linked evidence.
-- Pass/fail criteria must be measurable and requirement-traceable.
+- pass/FailCriteria must be measurable and requirement-traceable.
 - Latest verification status must be derived from latest valid evidence.
 - Failed verification with unresolved high-impact anomalies cannot be closed.
 
@@ -107,7 +123,8 @@ You are an expert in building verifiable evidence that the system satisfies its 
 | Version | Date | Author | Summary of Changes |
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial consolidated verification and validation skill. |
+| 1.1 | [Date] | [Author] | Added front-loaded Description section and explicit integration of ISO/IEC 15288, IEEE 1012, and INCOSE verification best practices. |
 
 ---
 
-*Authority: ISO/IEC/IEEE 15288:2023 | ISO/IEC/IEEE 29119 (guidance) | INCOSE Systems Engineering Handbook v5*
+*Authority: ISO/IEC/IEEE 15288:2023 | IEEE 1012-2016 | INCOSE Systems Engineering Handbook v5*
