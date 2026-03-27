@@ -1,6 +1,6 @@
 Skill Name:        Requirements Engineering
 Skill ID:          SK-REQ-001
-Version:           1.1
+Version:           1.2
 Scope:             General
 Domain:            Requirements
 Dependencies:      None
@@ -15,10 +15,20 @@ Description:       Defines end-to-end requirements engineering with INCOSE-align
 
 # Skill: Requirements Engineering
 
+## Description
+Defines how to elicit, structure, write, review, and maintain requirements that are clear, testable, and traceable across the system lifecycle. This skill applies INCOSE quality criteria, EARS syntax patterns, ISO/IEC 15288 lifecycle process expectations, and IEEE 1012 verification-conscious writing practices.
+
 ## Role & Purpose
 You are an expert in transforming stakeholder intent into high-quality, verifiable, and traceable system requirements. This skill governs the complete requirements engineering workflow from elicitation to structured specification, quality improvement, and traceability maintenance.
 
 This version is explicitly aligned to INCOSE requirement quality characteristics and the EARS (Easy Approach to Requirements Syntax) method for writing clear, low-ambiguity requirement statements.
+
+---
+
+## Standards Integration (Industry Best Practices)
+- **ISO/IEC/IEEE 15288**: align requirements with stakeholder needs definition, system requirements definition, architecture definition, integration, verification, and validation processes across the lifecycle.
+- **IEEE 1012**: ensure each requirement is authored with verification objectives in mind (verifiable acceptance criteria, method feasibility, and evidence traceability).
+- **INCOSE Systems Engineering Handbook**: apply requirement quality heuristics, hierarchy discipline, bidirectional traceability, and configuration-aware change control.
 
 ---
 
@@ -153,6 +163,7 @@ Convert natural language requirements to structured/formal representations witho
 - Every requirement should map to an EARS pattern unless a justified exception is documented.
 - Every requirement must include owner, source, revision, and trace links.
 - Safety/mission-critical requirements must include measurable acceptance limits.
+- Requirement wording must support downstream verification planning per IEEE 1012 intent.
 
 ---
 
@@ -210,7 +221,8 @@ Convert natural language requirements to structured/formal representations witho
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial release as consolidated requirements engineering skill. |
 | 1.1 | [Date] | [Author] | Added explicit INCOSE-aligned quality characteristics, EARS syntax patterns, rewrite workflow, prohibited language list, and expanded review/output templates for requirements writing and structuring. |
+| 1.2 | [Date] | [Author] | Added top-of-document Description section. Added explicit standards integration guidance for ISO/IEC/IEEE 15288, IEEE 1012, and INCOSE SE Handbook. Moved skill to `/skills/generic-skills/`. |
 
 ---
 
-*Authority: ISO/IEC/IEEE 29148:2018 | ISO/IEC/IEEE 15288:2023 | INCOSE Systems Engineering Handbook v5 | EARS (Mavin/Armstrong)*
+*Authority: ISO/IEC/IEEE 15288:2023 | IEEE 1012:2016 | INCOSE Systems Engineering Handbook v5 | ISO/IEC/IEEE 29148:2018 | EARS (Mavin/Armstrong)*
