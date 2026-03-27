@@ -17,7 +17,7 @@ All skills use a **Major.Minor** version number.
 - Version numbers never decrement.
 - A skill at Draft status uses version 0.x until first approval.
 - The registry must reflect the current approved version at all times.
-- The filename includes the version number (e.g., `requirements-writing-skill-v2.1.md`). On version change, the old file is retained in Git history — do not delete it.
+- The filename includes the version number (e.g., `requirements-engineering-v1.0.md`). On version change, the old file is retained in Git history — do not delete it.
 
 ---
 
@@ -111,5 +111,5 @@ When loading skills into an AI tool session for review or use:
 1. **Always load the registry first.** The registry gives the AI the full library context before any individual skill is analyzed.
 2. **Load the dependency map second** when conducting library-level analysis, gap review, or skill improvement sessions.
 3. **Load individual skill files** as needed for detailed review, improvement, or use.
-4. **State the session intent explicitly:** "Review SK-INTF-001 for gaps" produces a different analysis than "Use SK-INTF-001 to capture interfaces for the propulsion system." The AI should be told which mode it is operating in.
+4. **State the session intent explicitly:** "Review SK-INT-001 for gaps" produces a different analysis than "Use SK-INT-001 to capture interfaces for the propulsion system." The AI should be told which mode it is operating in.
 5. **Output from AI review sessions** (gap findings, overlap findings, improvement suggestions) should be captured as SCRs before the session ends — AI session outputs are not automatically committed to the repository.
