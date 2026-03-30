@@ -1,6 +1,6 @@
 Skill Name:        Requirements Engineering
 Skill ID:          SK-REQ-001
-Version:           1.2
+Version:           1.3
 Scope:             General
 Domain:            Requirements
 Dependencies:      None
@@ -9,7 +9,7 @@ Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Defines end-to-end requirements engineering with INCOSE-aligned quality rules and EARS-based requirement writing, structuring, traceability, conflict detection, and formalization.
+Description:       Defines end-to-end requirements engineering with INCOSE-aligned quality rules, EARS-based writing, resource-constrained prioritization, accept/reject disposition control, traceability, conflict detection, and formalization.
 
 ---
 
@@ -142,15 +142,53 @@ Detect ambiguous language and provide corrected alternatives.
 
 ---
 
-### 7. Natural Language to Formal Specification Conversion
+### 7. Resource-Constrained Prioritization and Additional Requirement Suggestions
+Create and maintain a prioritized requirement set that reflects limited implementation capacity while preserving mission, safety, and compliance intent.
+
+#### 7.1 Prioritization Dimensions and Scoring
+Evaluate each requirement using explicit scoring dimensions:
+- Mission/operational value
+- Safety/regulatory criticality
+- Dependency enablement (unlocks other requirements)
+- Risk-reduction impact
+- Verification complexity (penalty)
+- Implementation effort (penalty)
+
+Use a documented scoring method and keep the rationale per requirement row.
+
+#### 7.2 Priority Tiers (Default)
+- **P0 - Mandatory Now**: safety/regulatory/mission-critical requirements that cannot be deferred without formal acceptance.
+- **P1 - High Priority**: strong value and near-term feasibility; target current/next baseline.
+- **P2 - Planned Backlog**: useful but deferrable with managed impact.
+- **P3 - Parking Lot**: low current value or disproportional effort; hold unless trigger condition changes.
+
+#### 7.3 Additional Requirement Suggestion Workflow
+- Propose additional requirements discovered through gap/conflict analysis, risk findings, integration issues, or verification shortfalls.
+- Label each as `Additional Candidate` until disposition is made.
+- For each candidate, provide: problem addressed, expected benefit, affected artifacts, estimated effort, and recommended disposition.
+
+#### 7.4 Disposition States (Accept/Reject/Defer)
+- **Accepted**: approved for baseline with owner and target revision.
+- **Rejected**: declined with explicit reason and re-entry trigger.
+- **Deferred**: not approved now; revisit on stated condition/date.
+- **Open**: pending decision.
+
+#### 7.5 Disposition Governance Rules
+- No additional candidate may close as Rejected/Deferred without rationale and accountable decision authority.
+- No Accepted requirement may enter baseline without downstream impact tags for architecture, V&V, risk/safety, and integration.
+- Deferred items must include re-review criteria (date, risk threshold, dependency milestone, or defect trigger).
+
+---
+
+### 8. Natural Language to Formal Specification Conversion
 Convert natural language requirements to structured/formal representations without losing intent.
 
-#### 7.1 Supported Representation Forms
+#### 8.1 Supported Representation Forms
 - Structured requirement fields: subject, trigger/state, response, constraint, rationale
 - Predicate-style logic expressions
 - State/event constraints for model-based workflows
 
-#### 7.2 Conversion Rules
+#### 8.2 Conversion Rules
 - Preserve original text and maintain explicit link to formalized expression.
 - Record assumptions and interpretation decisions.
 - Require reviewer approval for high-criticality requirements.
@@ -158,12 +196,14 @@ Convert natural language requirements to structured/formal representations witho
 
 ---
 
-### 8. Quality & Integrity Rules
+### 9. Quality & Integrity Rules
 - Every requirement must pass INCOSE quality checks before baseline.
 - Every requirement should map to an EARS pattern unless a justified exception is documented.
 - Every requirement must include owner, source, revision, and trace links.
 - Safety/mission-critical requirements must include measurable acceptance limits.
 - Requirement wording must support downstream verification planning per IEEE 1012 intent.
+- Every requirement in a constrained-delivery baseline must carry a documented priority tier.
+- Every additional candidate requirement must carry one disposition state: Open, Accepted, Rejected, or Deferred.
 
 ---
 
@@ -193,6 +233,18 @@ Convert natural language requirements to structured/formal representations witho
 |---|---|---|---|---|---|---|
 ```
 
+### E. Prioritized Requirement Set (Resource-Constrained)
+```text
+| Req ID | Requirement Statement | Priority Tier (P0-P3) | Value/Criticality Rationale | Effort Estimate | Dependency Impact | Recommended Baseline |
+|---|---|---|---|---|---|---|
+```
+
+### F. Additional Requirement Disposition Log
+```text
+| Candidate ID | Suggested Requirement | Source Trigger | Recommendation (Accept/Reject/Defer) | Decision | Decision Rationale | Owner | Revisit Trigger/Date | Downstream Impact Tags (ARC/VNV/RSK/INT) |
+|---|---|---|---|---|---|---|---|---|
+```
+
 ---
 
 ## Anti-Patterns
@@ -205,6 +257,8 @@ Convert natural language requirements to structured/formal representations witho
 | Requirement with no verification intent | Not verifiable | Add verification method and acceptance criteria |
 | Requirement with no trace links | Broken lifecycle traceability | Add source/parent and downstream links |
 | Rewritten requirement not linked to original source | Auditability loss | Maintain explicit rewrite linkage |
+| Prioritized baseline with un-tiered requirements | Resource planning ambiguity | Assign explicit priority tier and rationale |
+| Additional suggestion marked rejected/deferred without rationale | Non-auditable decision process | Record decision authority, reason, and revisit trigger |
 
 ---
 
@@ -222,6 +276,7 @@ Convert natural language requirements to structured/formal representations witho
 | 1.0 | [Date] | [Author] | Initial release as consolidated requirements engineering skill. |
 | 1.1 | [Date] | [Author] | Added explicit INCOSE-aligned quality characteristics, EARS syntax patterns, rewrite workflow, prohibited language list, and expanded review/output templates for requirements writing and structuring. |
 | 1.2 | [Date] | [Author] | Added top-of-document Description section. Added explicit standards integration guidance for ISO/IEC/IEEE 15288, IEEE 1012, and INCOSE SE Handbook. Moved skill to `/skills/generic-skills/`. |
+| 1.3 | 2026-03-30 | Cursor Agent | Added resource-constrained requirement prioritization, additional requirement suggestion workflow, explicit Accept/Reject/Defer/Open disposition governance, and new prioritized/disposition output templates. |
 
 ---
 

@@ -1,6 +1,6 @@
 Skill Name:        Architecture & Design
 Skill ID:          SK-ARC-001
-Version:           1.1
+Version:           1.2
 Scope:             General
 Domain:            Architecture
 Dependencies:      SK-REQ-001
@@ -9,19 +9,19 @@ Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Governs system architecture and design activities including decomposition, interfaces, dependency mapping, trade studies, pattern selection, and model generation aligned to ISO/IEC 15288, IEEE 1012, and INCOSE guidance.
+Description:       Governs system architecture and design activities including decomposition, interfaces, dependency mapping, trade studies, pattern selection, model generation, and priority-aware execution of accepted requirements aligned to ISO/IEC 15288, IEEE 1012, and INCOSE guidance.
 
 ---
 
 # Skill: Architecture & Design
 
 ## Description
-This skill defines how to transform validated requirements into architecture artifacts and design decisions that are structured, traceable, and verification-ready. It integrates ISO/IEC 15288 technical-process intent (architecture definition, design definition), IEEE 1012 verification planning considerations, and INCOSE handbook best practices for model-based and document-based systems engineering.
+This skill defines how to transform validated requirements into architecture artifacts and design decisions that are structured, traceable, and verification-ready. It includes priority-aware architecture planning so constrained teams can sequence architecture work using accepted requirement tiers and explicit disposition decisions (accepted/rejected/deferred). It integrates ISO/IEC 15288 technical-process intent (architecture definition, design definition), IEEE 1012 verification planning considerations, and INCOSE handbook best practices for model-based and document-based systems engineering.
 
 ---
 
 ## Role & Purpose
-You are an expert in translating requirements into implementable system architectures and design baselines. This skill governs decomposition, interface architecture, dependency structure, design decision quality, and model generation suitable for MBSE-driven programs.
+You are an expert in translating requirements into implementable system architectures and design baselines. This skill governs decomposition, interface architecture, dependency structure, design decision quality, and model generation suitable for MBSE-driven programs while ensuring accepted high-priority requirements are implemented first and deferred/rejected candidates are explicitly managed.
 
 ---
 
@@ -51,6 +51,12 @@ You are an expert in translating requirements into implementable system architec
 - Define responsibilities, boundaries, and ownership for each component.
 - Establish allocation from requirements to architecture elements.
 - Identify critical components and single points of failure.
+- Prioritize decomposition and allocation for accepted P0/P1 requirements before lower-priority backlog items.
+
+#### 1.1 Priority-Aware Decomposition Rules
+- Identify the minimum architecture slice required to satisfy accepted P0 requirements.
+- Document architecture impacts for accepted additional requirements before baseline approval.
+- Mark deferred/rejected requirement candidates as excluded from current baseline and capture rationale.
 
 ---
 
@@ -74,6 +80,7 @@ You are an expert in translating requirements into implementable system architec
 - Evaluate cost, performance, risk, and implementation complexity.
 - Provide sensitivity analysis to test recommendation stability.
 - Record final architecture decisions in decision records.
+- Include architecture delta analysis for accepted additional requirement candidates.
 
 ---
 
@@ -97,6 +104,8 @@ You are an expert in translating requirements into implementable system architec
 - Every major architecture decision must include alternatives and rationale.
 - Model and document baselines must be revision-aligned.
 - Architecture artifacts must remain review-ready for V&V planning per IEEE 1012 expectations.
+- Architecture baselines must state which requirement priority tiers are in-scope and which items are deferred.
+- Accepted additional requirements require explicit architecture impact records before implementation starts.
 
 ---
 
@@ -120,6 +129,12 @@ You are an expert in translating requirements into implementable system architec
 |---|---|---|---|---|---|
 ```
 
+### D. Additional Requirement Architecture Impact Record
+```text
+| Candidate/Req ID | Priority Tier | Impacted Components | Interface Changes Required | Estimated Architecture Effort | Decision (Accept/Reject/Defer) | Rationale |
+|---|---|---|---|---|---|---|
+```
+
 ---
 
 ## Anti-Patterns
@@ -130,6 +145,7 @@ You are an expert in translating requirements into implementable system architec
 | Interface missing timing/units | Ambiguous integration contract | Add explicit contract fields |
 | Architecture decision with no alternatives | Weak decision basis | Add trade study with at least two alternatives |
 | Model views inconsistent with text baseline | Configuration mismatch | Reconcile and baseline sync |
+| Accepted high-priority requirement with no architecture impact record | Unmanaged change risk | Create impact record and baseline decision before implementation |
 
 ---
 
@@ -146,6 +162,7 @@ You are an expert in translating requirements into implementable system architec
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial consolidated architecture and design skill. |
 | 1.1 | [Date] | [Author] | Added leading Description section and explicit integration of ISO/IEC 15288, IEEE 1012, and INCOSE systems engineering best practices. |
+| 1.2 | [Date] | [Author] | Added priority-aware architecture planning for constrained delivery, including accepted/rejected/deferred requirement disposition handling and architecture impact records for additional requirement candidates. |
 
 ---
 
