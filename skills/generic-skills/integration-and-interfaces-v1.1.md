@@ -1,6 +1,6 @@
 Skill Name:        Integration & Interfaces
 Skill ID:          SK-INT-001
-Version:           1.1
+Version:           1.2
 Scope:             General
 Domain:            Integration
 Dependencies:      SK-REQ-001, SK-ARC-001, SK-VNV-001, SK-RSK-001
@@ -9,7 +9,7 @@ Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Governs integration and interface engineering including ICD generation, integration sequencing, cross-subsystem flow tracing, and interface compatibility/conflict detection, aligned to ISO/IEC 15288, IEEE 1012, and the INCOSE Systems Engineering Handbook.
+Description:       Governs integration and interface engineering including ICD generation, priority-aware integration sequencing from constrained requirement baselines, cross-subsystem flow tracing, and interface compatibility/conflict detection, aligned to ISO/IEC 15288, IEEE 1012, and the INCOSE Systems Engineering Handbook.
 
 ---
 
@@ -40,6 +40,7 @@ You are an expert in defining, controlling, and validating subsystem interaction
 - Identify entry criteria, verification gates, and exit criteria for each integration step.
 - Include rollback/containment actions for failed integration steps.
 - Ensure integration planning is consistent with ISO/IEC 15288 system integration process expectations.
+- Derive sequence priority from requirement tiers (P0/P1/P2/P3) and accepted additional requirement dispositions.
 
 ---
 
@@ -72,6 +73,8 @@ You are an expert in defining, controlling, and validating subsystem interaction
 - Integration sequence must reference dependencies, readiness criteria, and objective gates.
 - Interface conflict findings must include disposition owner and closure plan.
 - Trace outputs must link requirements, architecture, interfaces, verification records, and anomalies.
+- Priority-critical interfaces linked to P0/P1 requirements must be integrated and verified before lower-tier interface bundles unless a documented override is approved.
+- Interface impacts from accepted/deferred additional requirements must be recorded with explicit disposition references.
 
 ---
 
@@ -101,6 +104,12 @@ You are an expert in defining, controlling, and validating subsystem interaction
 |---|---|---|---|---|---|
 ```
 
+### E. Priority-Aware Integration Queue
+```text
+| Queue Item | Interface ID(s) | Driving Req Tier(s) | Dependency Preconditions | Planned Integration Window | Disposition Note (Accepted/Deferred Candidate Ref) |
+|---|---|---|---|---|---|
+```
+
 ---
 
 ## Anti-Patterns
@@ -112,6 +121,7 @@ You are an expert in defining, controlling, and validating subsystem interaction
 | Conflict detected but no owner/disposition | Unmanaged integration debt | Assign owner and closure plan |
 | Flow trace not linked to requirements | Lost assurance context | Add trace links to requirement and verification records |
 | Interface closure claim with no evidence | Non-auditable verification claim | Add required evidence and review records before closure |
+| Priority-critical interface queued after lower-tier interfaces without rationale | Misaligned constrained delivery plan | Re-sequence queue or record approved override |
 
 ---
 
@@ -128,6 +138,7 @@ You are an expert in defining, controlling, and validating subsystem interaction
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial consolidated integration and interfaces skill. |
 | 1.1 | [Date] | [Author] | Added top-level Description section and explicit ISO/IEC 15288, IEEE 1012, and INCOSE alignment for integration and interface verification discipline. |
+| 1.2 | [Date] | [Author] | Added priority-aware integration sequencing tied to requirement tiers and additional requirement dispositions. Added explicit quality rules, integration queue output format, and anti-pattern for constrained resource execution. |
 
 ---
 

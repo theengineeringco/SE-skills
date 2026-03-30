@@ -1,6 +1,6 @@
 Skill Name:        Risk & Safety Analysis
 Skill ID:          SK-RSK-001
-Version:           1.1
+Version:           1.2
 Scope:             General
 Domain:            Safety
 Dependencies:      SK-REQ-001, SK-ARC-001, SK-VNV-001
@@ -9,7 +9,7 @@ Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Governs hazard analysis and risk assessment with lifecycle safety integration, risk prioritization, and mitigation closure aligned to ISO/IEC 15288, IEEE 1012, and INCOSE systems engineering guidance.
+Description:       Governs hazard analysis and risk assessment with lifecycle safety integration, prioritized risk-treatment recommendations under resource limits, and mitigation closure aligned to ISO/IEC 15288, IEEE 1012, and INCOSE systems engineering guidance.
 
 ---
 
@@ -49,6 +49,7 @@ You are an expert in identifying, classifying, and reducing system risk through 
 - Compute risk priority using defined severity, likelihood, and detectability methods.
 - Rank hazards and failure conditions for mitigation sequencing.
 - Capture residual risk after mitigation assumptions and verification outcomes.
+- Explicitly distinguish must-act-now risk controls from deferrable controls under constrained resources.
 
 ---
 
@@ -66,9 +67,15 @@ You are an expert in identifying, classifying, and reducing system risk through 
 - Define objective closure evidence needed to claim mitigation effectiveness.
 - Track open/closed status with accountable owner and due criteria.
 
+### 6. Resource-Constrained Safety Decision Support
+- Consume requirement priority tiers (P0-P3) and disposition states (Accepted/Rejected/Deferred/Open) from SK-REQ-001.
+- Elevate safety-significant accepted candidates to immediate mitigation planning with owner and verification path.
+- For deferred safety actions, require documented residual risk acceptance authority and revisit trigger.
+- For rejected safety-related candidates, document why existing controls remain sufficient.
+
 ---
 
-### 6. IEEE 1012 Integration Rules
+### 7. IEEE 1012 Integration Rules
 - Scale independence and rigor of verification for safety-significant risk controls.
 - Require explicit verification strategy and acceptance evidence for high-consequence mitigations.
 - Ensure anomaly and non-conformance findings feed risk reassessment.
@@ -76,12 +83,13 @@ You are an expert in identifying, classifying, and reducing system risk through 
 
 ---
 
-### 7. Quality & Integrity Rules
+### 8. Quality & Integrity Rules
 - No high-severity hazard may remain without mitigation strategy and owner.
 - Risk scores must include method, assumptions, and revision context.
 - Safety conclusions must trace to explicit evidence and analyses.
 - Residual risk acceptance requires documented authority and rationale.
 - Safety records must be configuration-controlled and baseline-linked.
+- Deferred or rejected safety-related requirement suggestions must include explicit risk disposition rationale.
 
 ---
 
@@ -131,6 +139,7 @@ You are an expert in identifying, classifying, and reducing system risk through 
 |---|---|---|---|
 | 1.0 | [Date] | [Author] | Initial consolidated risk and safety analysis skill. |
 | 1.1 | [Date] | [Author] | Added Description section at top and aligned lifecycle safety/risk governance to ISO/IEC 15288, IEEE 1012 V&V rigor expectations, and INCOSE guidance. |
+| 1.2 | [Date] | [Author] | Added resource-constrained safety decision support that consumes requirement priority tiers and Accept/Reject/Defer dispositions with explicit risk rationale expectations for deferred/rejected safety-related suggestions. |
 
 ---
 

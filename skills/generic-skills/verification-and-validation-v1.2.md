@@ -1,6 +1,6 @@
 Skill Name:        Verification & Validation
 Skill ID:          SK-VNV-001
-Version:           1.2
+Version:           1.3
 Scope:             General
 Domain:            Verification
 Dependencies:      SK-REQ-001, SK-ARC-001
@@ -9,7 +9,7 @@ Status:            Active
 Author:            [Author]
 Date Created:      [Date]
 Last Modified:     [Date]
-Description:       Governs verification and validation lifecycle activities and explicit generation of Verification Cross Reference Matrices (VCRMs) including scoped requirements, pass/fail criteria, methods, linked tests, status/results, and coverage analysis.
+Description:       Governs verification and validation lifecycle activities and explicit generation of Verification Cross Reference Matrices (VCRMs) including scoped requirements, pass/fail criteria, methods, linked tests, status/results, coverage analysis, and priority-aware execution under constrained resources.
 
 ---
 
@@ -57,47 +57,55 @@ Generate a Verification Cross Reference Matrix for the user-specified scope (sys
 #### 1.2 Required VCRM Row Content
 Every VCRM row shall include:
 - Requirement ID and statement (for the specified scope)
+- Requirement priority tier and disposition state (if additional candidate)
 - pass/FailCriteria (measurable)
 - Verification method (Test / Analysis / Inspection / Demonstration / Similarity)
 - Linked test/analysis artifact IDs
 - Verification status and latest result
 - Coverage assessment and rationale
 
-### 2. Test Case Generation from Requirements
+### 2. Priority-Aware Verification Planning
+- Plan verification sequence from requirement priority tiers (P0 to P3) and accepted dispositions.
+- Ensure P0 requirements have first-pass verification readiness before lower-tier execution.
+- Do not schedule rejected requirements for verification unless reopened by change control.
+- Track deferred requirements with explicit re-entry condition into the V&V plan.
+
+### 3. Test Case Generation from Requirements
 - Generate test cases directly from requirement intent and acceptance criteria.
 - Define preconditions, procedures, expected outcomes, and pass/fail criteria.
 - Ensure each test case references one or more requirement IDs.
 - Generate analysis/inspection records when test is not the primary method.
 
-### 3. Coverage Analysis (Requirements -> Test Mapping)
+### 4. Coverage Analysis (Requirements -> Test Mapping)
 - Compute mapping completeness between requirements and verification artifacts.
 - Detect uncovered requirements and redundant/duplicate tests.
 - Produce row-level and aggregate coverage metrics.
 - Include closure confidence indicators per requirement.
 
-### 4. Verification Status and Result Roll-Up
+### 5. Verification Status and Result Roll-Up
 - Derive requirement-level verification status from linked latest valid result records.
 - Record latest result summary and evidence reference per requirement row.
 - Prevent closure if failure conditions remain unresolved or evidence is incomplete.
 
-### 5. Anomaly and Failure Mode Suggestion (FMEA Assistance)
+### 6. Anomaly and Failure Mode Suggestion (FMEA Assistance)
 - Suggest likely failure modes triggered by failed or borderline results.
 - Propose anomaly records with severity, detectability, and suspected cause.
 - Generate candidate containment and corrective-action verification steps.
 - Feed findings to Risk & Safety workflows.
 
-### 6. Regression Impact Analysis
+### 7. Regression Impact Analysis
 - Determine impacted requirements/tests after requirement, design, interface, or code changes.
 - Prioritize re-verification scope by risk and criticality.
 - Classify tests as re-run mandatory, conditional, or unaffected.
 - Record rationale for excluded regression cases.
 
-### 7. Quality & Integrity Rules
+### 8. Quality & Integrity Rules
 - No requirement may be reported as verified without linked evidence.
 - pass/FailCriteria must be measurable and requirement-traceable.
 - Latest verification status must be derived from latest valid evidence.
 - Failed verification with unresolved high-impact anomalies cannot be closed.
 - A VCRM is incomplete if any in-scope requirement is missing a row.
+- For constrained programs, P0/P1 accepted requirements must be explicitly visible in coverage roll-up reports.
 
 ---
 
@@ -120,8 +128,8 @@ Every VCRM row shall include:
 
 ### A. Verification Cross Reference Matrix (VCRM)
 ```text
-| Req ID | Requirement Statement | pass/FailCriteria | Verification Method | Linked Test/Analysis IDs | Verification Status | Latest Result | Evidence Ref | Coverage Rating | Coverage Rationale |
-|---|---|---|---|---|---|---|---|---|---|
+| Req ID | Requirement Statement | Priority Tier | Disposition | pass/FailCriteria | Verification Method | Linked Test/Analysis IDs | Verification Status | Latest Result | Evidence Ref | Coverage Rating | Coverage Rationale |
+|---|---|---|---|---|---|---|---|---|---|---|---|
 ```
 
 ### B. VCRM Coverage Summary
@@ -154,6 +162,7 @@ Every VCRM row shall include:
 | Row has method but no linked test/analysis IDs | Broken verification chain | Add artifact references or mark partial coverage |
 | Coverage marked Full with unresolved critical failures | Overstated confidence | Downgrade coverage and track actions |
 | Regression scope based only on changed files | Under-scoped re-verification | Include requirement/design/interface impact analysis |
+| Deferred or rejected requirement treated as active verification closure | Baseline/disposition mismatch | Reconcile with disposition log before reporting status |
 
 ---
 
@@ -171,6 +180,7 @@ Every VCRM row shall include:
 | 1.0 | [Date] | [Author] | Initial consolidated verification and validation skill. |
 | 1.1 | [Date] | [Author] | Added front-loaded Description section and explicit integration of ISO/IEC 15288, IEEE 1012, and INCOSE verification best practices. |
 | 1.2 | [Date] | [Author] | Added explicit VCRM generation competency and workflow covering scoped requirements, pass/fail criteria, verification method and linked test cases, verification status/results, and per-requirement coverage analysis. |
+| 1.3 | [Date] | [Author] | Added priority-aware verification planning and VCRM fields for priority tier/disposition to support constrained delivery and explicit accept/reject/defer governance. |
 
 ---
 

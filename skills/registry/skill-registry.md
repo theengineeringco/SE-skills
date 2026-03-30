@@ -1,6 +1,6 @@
 Skill Name:        Skill Registry
-Version:           2.3
-Last Updated:      2026-03-27
+Version:           2.4
+Last Updated:      2026-03-30
 Maintained by:     Systems Engineering Lead
 
 ---
@@ -31,12 +31,12 @@ Maintained by:     Systems Engineering Lead
 
 | ID | Name | Version | Domain | Scope | Dependencies | Extended By | Status | File |
 |---|---|---|---|---|---|---|---|---|
-| SK-REQ-001 | Requirements Engineering | 1.2 | Requirements | General | None | SK-AVN-ADD-001 | Active | /skills/generic-skills/requirements-engineering-v1.2.md |
-| SK-ARC-001 | Architecture & Design | 1.1 | Architecture | General | SK-REQ-001 | SK-AVN-ADD-001 | Active | /skills/generic-skills/architecture-and-design-v1.1.md |
-| SK-VNV-001 | Verification & Validation | 1.2 | Verification | General | SK-REQ-001, SK-ARC-001 | SK-AVN-ADD-001 | Active | /skills/generic-skills/verification-and-validation-v1.2.md |
-| SK-RSK-001 | Risk & Safety Analysis | 1.1 | Safety | General | SK-REQ-001, SK-ARC-001, SK-VNV-001 | SK-AVN-ADD-001 | Active | /skills/generic-skills/risk-and-safety-analysis-v1.1.md |
-| SK-INT-001 | Integration & Interfaces | 1.1 | Integration | General | SK-REQ-001, SK-ARC-001, SK-VNV-001, SK-RSK-001 | SK-AVN-ADD-001 | Active | /skills/generic-skills/integration-and-interfaces-v1.1.md |
-| SK-AVN-ADD-001 | Aviation Systems Engineering Addendum | 1.1 | Addendum | Aviation | SK-REQ-001, SK-ARC-001, SK-VNV-001, SK-RSK-001, SK-INT-001 | None | Active | /skills/generic-skills/aviation-systems-engineering-addendum-v1.1.md |
+| SK-REQ-001 | Requirements Engineering | 1.3 | Requirements | General | None | SK-AVN-ADD-001 | Active | /skills/generic-skills/requirements-engineering-v1.2.md |
+| SK-ARC-001 | Architecture & Design | 1.2 | Architecture | General | SK-REQ-001 | SK-AVN-ADD-001 | Active | /skills/generic-skills/architecture-and-design-v1.1.md |
+| SK-VNV-001 | Verification & Validation | 1.3 | Verification | General | SK-REQ-001, SK-ARC-001 | SK-AVN-ADD-001 | Active | /skills/generic-skills/verification-and-validation-v1.2.md |
+| SK-RSK-001 | Risk & Safety Analysis | 1.2 | Safety | General | SK-REQ-001, SK-ARC-001, SK-VNV-001 | SK-AVN-ADD-001 | Active | /skills/generic-skills/risk-and-safety-analysis-v1.1.md |
+| SK-INT-001 | Integration & Interfaces | 1.2 | Integration | General | SK-REQ-001, SK-ARC-001, SK-VNV-001, SK-RSK-001 | SK-AVN-ADD-001 | Active | /skills/generic-skills/integration-and-interfaces-v1.1.md |
+| SK-AVN-ADD-001 | Aviation Systems Engineering Addendum | 1.2 | Addendum | Aviation | SK-REQ-001, SK-ARC-001, SK-VNV-001, SK-RSK-001, SK-INT-001 | None | Active | /skills/generic-skills/aviation-systems-engineering-addendum-v1.1.md |
 
 ---
 
@@ -58,7 +58,7 @@ Maintained by:     Systems Engineering Lead
 
 | Item | Description | Action Required |
 |---|---|---|
-| None | Registry reflects consolidated six-skill structure. | None |
+| REQ-PRI-001 | Added resource-constrained prioritization and additional requirement disposition workflow (Accept/Reject/Defer) to core skills and aviation overlay. | Closed |
 
 ---
 
